@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerResources : MonoBehaviour
@@ -11,10 +13,27 @@ public class PlayerResources : MonoBehaviour
     [SerializeField] public int baseDamage = 2;
     [SerializeField] public float baseShopPrice = 1.0f;
     [SerializeField] public float baseHealingEffectiveness = 1.0f;
-    [SerializeField] public float baselifeSteal = 0.0f;
+    [SerializeField] public float baselifeStealMultiplier = 1.0f;
+    [SerializeField] public float baseLifeSteal = 0.0f;
     [SerializeField] public float baseGoldMultiplier = 1.0f;
+    [SerializeField] public int dashCooldown = 10;
+    [SerializeField] public float baseDamageReductionMultiplier = 1.0f;
+    [SerializeField] public float damageReduction = 1.0f;
+    [SerializeField] public int invulnerabilityFrames = 2;
+    [SerializeField] public int sinceDamageTaken = int.MaxValue;
+    [SerializeField] public int heatlhRegenerationAmount = 0;
+    [SerializeField] public int healthRegenerationDuration = 0;
 
-    public bool foxLuck = false;
+    private bool isRegenerating = false;
+
+
+
+    public bool foxLuck = false; //foxluck boon status
+    public bool resolve = false; //resolve boon status
+    public bool lifeStealActive = false;
+    public bool damageReductionActive = false;
+    public bool regenerationActive = false;
+    public bool parryActive = false;
 
     public int mana;
     public int maxMana = 6; // (0 is none, 6 is 5 AKA full)
@@ -71,14 +90,6 @@ public class PlayerResources : MonoBehaviour
         moneyUI.SetMoney(0);
         metaMoneyUI.SetMetaMoney(metaMoney);
 
-        baseCritChance = 0.1f;
-        baseDamage = 2;
-        baseShopPrice = 1.0f;
-        baseHealingEffectiveness = 1.0f;
-        baselifeSteal = 0.0f;
-        baseGoldMultiplier = 1.0f;
-   
-
 
 
   }
@@ -86,7 +97,8 @@ public class PlayerResources : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float previousLifeSteal = baselifeSteal;
+        
+        
         moneyUI.SetMoney(money);
         healthBar.SetHealth(health);
         manaBar.SetMana(mana);
@@ -104,18 +116,53 @@ public class PlayerResources : MonoBehaviour
         {
             Application.Quit();
         }
-        //Reset base life steal first then update 
-        if(foxLuck == false || health <= maxHealth / 2) 
-        {
-          baselifeSteal = 0.0f;
-        }
-        if (foxLuck == true && health > maxHealth / 2) //lifesteal active above 50% hp
-        {
-        baselifeSteal = previousLifeSteal;
+    //Reset base life steal first then update 
 
-        }
+      UpdateLifeSteal();
+      UpdateDamageReduction();
+      UpdateRegeneration();
 
-    
+
+
+
+  }
+    public void UpdateLifeSteal()
+    {
+      
+      
+      if (foxLuck == false || health <= maxHealth / 2)
+      {
+        baseLifeSteal = 0.0f;
+        lifeStealActive = false;
+
+      }
+      if (foxLuck == true && health > maxHealth / 2 && lifeStealActive == false) //lifesteal active above 50% hp
+      {
+        baseLifeSteal += baselifeStealMultiplier;
+        lifeStealActive = true;
+
+      }
+    }
+    public void UpdateDamageReduction()
+    {
+      
+      if (resolve == false || health <= maxHealth / 2)
+      {
+        damageReduction = 1.0f;
+      damageReductionActive = false;
+    }
+      if (resolve == true && health > maxHealth / 2 && damageReductionActive == false) //while under 50%hp gain damage reduction if resolve boon is active
+      {
+        damageReduction *= baseDamageReductionMultiplier;
+        damageReductionActive = true;
+      }
+    }
+    public void UpdateRegeneration()
+    {
+      if (regenerationActive == true && sinceDamageTaken >= 5) //if the boon is active and player didint take damage for 5 seconds
+      {
+      IncreaseRegeneration(heatlhRegenerationAmount, healthRegenerationDuration);
+      }
 
     }
 
@@ -128,6 +175,12 @@ public class PlayerResources : MonoBehaviour
         }
 
         healthBar.SetHealth(health);
+
+        if (isRegenerating) //reset regen if player took damage
+        {
+          StopCoroutine("RegenerateHealth");
+          isRegenerating = false;
+        }
     }
 
     public void UseMana(int amount)
@@ -156,9 +209,7 @@ public class PlayerResources : MonoBehaviour
     }
     public void IncreaseMaxHealth(int value)
     {
-
       maxHealth += value;
-
     }
     public void DecreaseShopPrices(float value)
     {
@@ -187,14 +238,59 @@ public class PlayerResources : MonoBehaviour
     }
     public void IncreaseBaseLifeSteal(float value)
     {
-      baselifeSteal += 1 * value / 100;
-      Debug.Log($"New life steal: {baselifeSteal}");
+      baselifeStealMultiplier += 1 * value / 100;
+      Debug.Log($"New life steal: {baselifeStealMultiplier}");
     }
     public void SetFoxLuckStatus(bool value)
     {
       foxLuck = value;
-      Debug.Log($"Fox luck status: {foxLuck}");
+     Debug.Log($"Fox luck status: {foxLuck}");
     }
-    
+    public void DecreaseDashCooldown(int value)
+    {
+      dashCooldown -= value;
+      Debug.Log($"New dash cooldown: {dashCooldown}");
+    }
+    public void IncreaseBaseDamageReduction(float value)
+    {
+      baseDamageReductionMultiplier *= (1 + value / 100);
+      Debug.Log($"New damage reduction: {baseDamageReductionMultiplier}");
+    }
+    public void IncreaseInvulnerabilityFrames(int value)
+    {
+      invulnerabilityFrames += value;
+      Debug.Log($"New invulnerability frames: {invulnerabilityFrames}");
+    }
+    public void IncreaseRegenerationMultipliers(int value, int seconds)
+    {
+      heatlhRegenerationAmount += value;
+    healthRegenerationDuration += seconds;
+    }
+    public void IncreaseRegeneration(int value, int seconds)
+    {
+      if (!isRegenerating) 
+      {
+        StartCoroutine(RegenerateHealth(value, seconds));
+      }
+    }
+
+    private IEnumerator RegenerateHealth(int value, int seconds)
+    {
+    isRegenerating = true;
+
+    int totalTicks = seconds; // Number of ticks (1 tick per second)
+      float tickInterval = 1.0f; // Time between each tick in seconds
+
+      for (int i = 0; i < totalTicks; i++)
+      {
+        health += value;
+        health = Mathf.Clamp(health, 0, maxHealth); 
+        healthBar.SetHealth(health);
+
+        yield return new WaitForSeconds(tickInterval); 
+      }
+      isRegenerating = false;
+  }
+
 
 }

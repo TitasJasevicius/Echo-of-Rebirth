@@ -1,14 +1,12 @@
-using UnityEngine;
 using System;
-using System.Collections.Generic;
+using UnityEngine;
 
-public class FoxsLuckBoon : MonoBehaviour
+public class QuickfeetBoon : MonoBehaviour
 {
-  public float LifeStealMultiplier { get; set; }
+  public int InvFrameCount { get; set; }
   public int Price = 300;
   public int DiscountedPrice { get; set; }
   public bool Activated { get; set; } = false;
-
   [SerializeField] public PlayerResources PR;
   private float previousBaseShopPrice;
 
@@ -17,7 +15,7 @@ public class FoxsLuckBoon : MonoBehaviour
     previousBaseShopPrice = PR.baseShopPrice;
     DiscountedPrice = (int)Math.Round(Price * PR.baseShopPrice);
   }
-  
+
   public void Update()
   {
     if (PR.baseShopPrice != previousBaseShopPrice)
@@ -28,7 +26,6 @@ public class FoxsLuckBoon : MonoBehaviour
   }
   public void ApplyBoon(PlayerResources playerResources)
   {
-  
     if (Activated)
     {
       Debug.Log("Boon already activated.");
@@ -41,17 +38,16 @@ public class FoxsLuckBoon : MonoBehaviour
     }
     if (Activated == false && playerResources.money >= DiscountedPrice)
     {
-
-      playerResources.IncreaseBaseLifeSteal(LifeStealMultiplier);
+      playerResources.IncreaseInvulnerabilityFrames(InvFrameCount);
       Activated = true;
       playerResources.money -= DiscountedPrice;
-      Debug.Log($"Fox luck lifesteal set to: {LifeStealMultiplier}");
+      Debug.Log($"Invincibility frames increased by {InvFrameCount}.");
     }
-    
   }
-  public void SetLifeStealMultiplier(float percentage)
+
+  public void SetInvFrameCount(int count)
   {
-    LifeStealMultiplier = percentage;
+    InvFrameCount = count;
   }
   public int GetPrice()
   {
