@@ -9,24 +9,38 @@ public class PlayerResources : MonoBehaviour
     public int health;
     public int maxHealth = 100;
 
-    [SerializeField] public float baseCritChance = 0.1f;
-    [SerializeField] public int baseDamage = 2;
-    [SerializeField] public float baseShopPrice = 1.0f;
-    [SerializeField] public float baseHealingEffectiveness = 1.0f;
-    [SerializeField] public float baselifeStealMultiplier = 1.0f;
-    [SerializeField] public float baseLifeSteal = 0.0f;
-    [SerializeField] public float baseGoldMultiplier = 1.0f;
-    [SerializeField] public int dashCooldown = 10;
-    [SerializeField] public float baseDamageReductionMultiplier = 1.0f;
-    [SerializeField] public float damageReduction = 1.0f;
-    [SerializeField] public int invulnerabilityFrames = 2;
-    [SerializeField] public int sinceDamageTaken = int.MaxValue;
-    [SerializeField] public int heatlhRegenerationAmount = 0;
-    [SerializeField] public int healthRegenerationDuration = 0;
-
-    private bool isRegenerating = false;
-
-
+    public float baseCritChance = 0.1f;
+    public float baseCritDamage = 1.5f; // 50% more damage
+    public int baseDamage = 2;
+    public float baseShopPrice = 1.0f;
+    public float baseHealingEffectiveness = 1.0f;
+    public float baselifeStealMultiplier = 1.0f;
+    public float baseLifeSteal = 0.0f;
+    public float baseGoldMultiplier = 1.0f;
+    public int dashCooldown = 10;
+    public float baseDamageReductionMultiplier = 1.0f;
+    public float damageReduction = 1.0f; //base damage reduction
+    public int invulnerabilityFrames = 2;
+    public int sinceDamageTaken = int.MaxValue; // time since last damage taken in seconds
+    public int heatlhRegenerationAmount = 0;
+    public int healthRegenerationDuration = 0;
+    public int chanceToBlindOnDash = 0; // blinding light boon, chance to blind enemies on dash causing them to miss attacks
+    public int chanceToDodgeBlindedEnemies = 0; // blinding light boon, chance to dodge enemy attacks
+    public int burningDOT = 0; // burning damage over time
+    public int burningDuration = 0; // burning duration
+    public int attackRange = 1; 
+    public int newInstanceShield = 0;
+    public int baseDodgeChance = 0; //regular, not conditional dodge chance
+    public int baseInvisibilityDuration = 0; // in seconds
+    public int shadowDashCooldown = 0;
+    public int SleepChance = 0;
+    public int SleepDuration = 0;
+    public float baseAttackSpeed = 1.0f;
+    public int bleedDamage = 0;
+    public int bleedDuration = 0; 
+    public float grandStandAttackSpeedMultiplier = 0.0f;
+    public float bloodThirstMovementSpeed = 0.0f; // max attack speed multiplier
+    public int focusExtraDamage = 0; // focus boon, extra damage on next attack
 
     public bool foxLuck = false; //foxluck boon status
     public bool resolve = false; //resolve boon status
@@ -34,6 +48,18 @@ public class PlayerResources : MonoBehaviour
     public bool damageReductionActive = false;
     public bool regenerationActive = false;
     public bool parryActive = false;
+    public bool blindingDashActive = false; //blinding dash boon status
+    public bool burnActive = false; // burning status
+    public bool pierceActive = false; // Secondary light boon status, pierce all enemies with attacks
+    public bool shadowDashActive = false; // dash status
+    public bool sleepAttackActive = false; // moon blade boon status
+    public bool viciousAttackActive = false; // vicious attack boon status / bleed attacks
+    public bool grandStandActive = false; // does nothing right now since theres no monster logic, when this is active attack speed should increased based off of the amount of alive mobs
+    public bool bloodThirstActive = false; // blood thirst boon status, should increase ms based on bleeding enemies count
+    public bool focusActive = false;
+
+    public bool isInvisible = false;
+    public bool isRegenerating = false;
 
     public int mana;
     public int maxMana = 6; // (0 is none, 6 is 5 AKA full)
@@ -126,7 +152,40 @@ public class PlayerResources : MonoBehaviour
 
 
   }
-    public void UpdateLifeSteal()
+  private IEnumerator RegenerateHealth(int value, int seconds)
+  {
+    isRegenerating = true;
+
+    int totalTicks = seconds; // Number of ticks (1 tick per second)
+    float tickInterval = 1.0f; // Time between each tick in seconds
+
+    for (int i = 0; i < totalTicks; i++)
+    {
+      health += value;
+      health = Mathf.Clamp(health, 0, maxHealth);
+      healthBar.SetHealth(health);
+
+      yield return new WaitForSeconds(tickInterval);
+    }
+    isRegenerating = false;
+  }
+  public void IncreaseRegeneration(int value, int seconds)
+  {
+    if (!isRegenerating)
+    {
+      StartCoroutine(RegenerateHealth(value, seconds));
+    }
+  }
+
+  public void UpdateRegeneration()
+  {
+    if (regenerationActive == true && sinceDamageTaken >= 5) //if the boon is active and player didint take damage for 5 seconds
+    {
+      IncreaseRegeneration(heatlhRegenerationAmount, healthRegenerationDuration);
+    }
+
+  }
+  public void UpdateLifeSteal()
     {
       
       
@@ -157,14 +216,7 @@ public class PlayerResources : MonoBehaviour
         damageReductionActive = true;
       }
     }
-    public void UpdateRegeneration()
-    {
-      if (regenerationActive == true && sinceDamageTaken >= 5) //if the boon is active and player didint take damage for 5 seconds
-      {
-      IncreaseRegeneration(heatlhRegenerationAmount, healthRegenerationDuration);
-      }
 
-    }
 
     public void PlayerTakeDamage(int damage)
     {
@@ -202,6 +254,7 @@ public class PlayerResources : MonoBehaviour
         }
     }
 
+
     private void SaveMetaMoney()
     {
         PlayerPrefs.SetInt(MetaMoneyKey, metaMoney);
@@ -214,83 +267,137 @@ public class PlayerResources : MonoBehaviour
     public void DecreaseShopPrices(float value)
     {
       baseShopPrice *= (1 - value / 100);
-      Debug.Log($"New shop price: {baseShopPrice}");
+      
     }
     public void IncreaseBaseCrit(float value)
     {
       baseCritChance *= (1 + value / 100);
-      Debug.Log($"New crit chance: {baseCritChance}");
+      
     }
     public void IncreaseBaseDamage(int value)
     {
       baseDamage += value;
-      Debug.Log($"New base damage: {baseDamage}");
+     
     }
     public void IncreaseBaseGoldMultiplier(float value)
     {
       baseGoldMultiplier *= (1 + value / 100);
-      Debug.Log($"New gold multiplier: {baseGoldMultiplier}");
+      
     }
     public void IncreaseBaseHealingEffectiveness(float value)
     {
       baseHealingEffectiveness *= (1 + value / 100);
-      Debug.Log($"New healing effectiveness: {baseHealingEffectiveness}");
+      
     }
     public void IncreaseBaseLifeSteal(float value)
     {
       baselifeStealMultiplier += 1 * value / 100;
-      Debug.Log($"New life steal: {baselifeStealMultiplier}");
+      
     }
     public void SetFoxLuckStatus(bool value)
     {
       foxLuck = value;
-     Debug.Log($"Fox luck status: {foxLuck}");
+    
     }
     public void DecreaseDashCooldown(int value)
     {
       dashCooldown -= value;
-      Debug.Log($"New dash cooldown: {dashCooldown}");
+     
     }
     public void IncreaseBaseDamageReduction(float value)
     {
       baseDamageReductionMultiplier *= (1 + value / 100);
-      Debug.Log($"New damage reduction: {baseDamageReductionMultiplier}");
+      
     }
     public void IncreaseInvulnerabilityFrames(int value)
     {
       invulnerabilityFrames += value;
-      Debug.Log($"New invulnerability frames: {invulnerabilityFrames}");
+      
     }
     public void IncreaseRegenerationMultipliers(int value, int seconds)
     {
       heatlhRegenerationAmount += value;
-    healthRegenerationDuration += seconds;
-    }
-    public void IncreaseRegeneration(int value, int seconds)
-    {
-      if (!isRegenerating) 
-      {
-        StartCoroutine(RegenerateHealth(value, seconds));
-      }
+      healthRegenerationDuration += seconds;
     }
 
-    private IEnumerator RegenerateHealth(int value, int seconds)
+
+    public void IncreaseBlindChance(int value)
     {
-    isRegenerating = true;
+      chanceToBlindOnDash += value;
+      
+    }
+    public void IncreaseMissChance(int value)
+    {
+      chanceToDodgeBlindedEnemies += value;
+      
+    }
+    public void IncreaseBurnDamageAndDuration(int value, int seconds)
+    {
+      burningDOT += value;
+      burningDuration += seconds;
+      
+    }
+    public void IncreaseAttackRange(int value)
+    {
+      attackRange += value;
+      
+    }
+    public void IncreaseNewInstanceShield(int value)
+    {
+      newInstanceShield += value;
+      
+    }
+    public void IncreaseDodgeChance(int value)
+    {
+      baseDodgeChance += value;
+      
+    }
+    public void IncreaseInvisibilityDuration(int value)
+    {
+      baseInvisibilityDuration += value;
+      
+    }
+    public void IncreaseShadowDashCooldown(int value)
+    {
+      shadowDashCooldown += value;
 
-    int totalTicks = seconds; // Number of ticks (1 tick per second)
-      float tickInterval = 1.0f; // Time between each tick in seconds
+    }
+    public void IncreaseSleepChance(int value)
+    {
+      SleepChance += value;
 
-      for (int i = 0; i < totalTicks; i++)
-      {
-        health += value;
-        health = Mathf.Clamp(health, 0, maxHealth); 
-        healthBar.SetHealth(health);
+    }
+    public void IncreaseSleepDuration(int value)
+    {
+      SleepDuration += value;
+    }
+    public void IncreaseAttackSpeedMultiplier(float value)
+    {
+      grandStandAttackSpeedMultiplier += value / 100;
 
-        yield return new WaitForSeconds(tickInterval); 
-      }
-      isRegenerating = false;
-  }
+    }
+    public void IncreaseCritMultiplier(float value)
+    {
+    baseCritDamage *= (1 + value / 100);
+
+    }
+    public void IncreaseBloodThirstMovementSpeed(float value)
+    {
+      bloodThirstMovementSpeed += value;
+    }
+    public void IncreaseFocusExtraDamage(int value)
+    {
+      focusExtraDamage += value;
+    }
+    public void IncreaseBleedDamage(int value)
+    {
+      bleedDamage += value;
+    }
+    public void IncreaseBleedDuration(int value)
+    {
+      bleedDuration += value;
+    }
+
 
 
 }

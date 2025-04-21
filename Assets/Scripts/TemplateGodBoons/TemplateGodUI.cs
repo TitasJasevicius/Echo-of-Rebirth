@@ -11,11 +11,16 @@ public class TemplateGodUI : MonoBehaviour
 
   [SerializeField] public BoonAssets boonAssets;
   [SerializeField] public PlayerResources playerResources;
-  [SerializeField] public InariBoons inariBoons;
-  [SerializeField] public BishamontenBoons bishamontenBoons;
+  [SerializeField] public PlayerMovement playerMovement;
+
+  //Boons containers
   [SerializeField] private Transform inariBoonsContainer;
   [SerializeField] private Transform bishamontenBoonsContainer;
+  [SerializeField] private Transform amaterasuBoonsContainer;
+  [SerializeField] private Transform tsukuyomiBoonsContainer;
+  [SerializeField] private Transform hachimanBoonsContainer;
 
+  //probably just rewrite this to use the class that holds all boons at some time...
   //Inari boons
   [SerializeField] public BanteringBoon banteringBoon;
   [SerializeField] public EasyFindBoon easyFindBoon;
@@ -30,14 +35,47 @@ public class TemplateGodUI : MonoBehaviour
   [SerializeField] public ParryBoon parryBoon;
   [SerializeField] public StaminaBoon staminaBoon;
 
+  //Amaterasu boons
+  [SerializeField] public BlindingLight blindingLight;
+  [SerializeField] public BurningBlade burningBlade;
+  [SerializeField] public LightsSpeed lightsSpeed;
+  [SerializeField] public MorningSunshine morningSunshine;
+  [SerializeField] public SunsReach sunsReach;
+
+  //Tsukuyomi boons
+  [SerializeField] public MoonBlade moonBlade;
+  [SerializeField] public ShadowDash shadowDash;
+  [SerializeField] public SecondaryLight secondaryLight;
+  [SerializeField] public FullMoon fullMoon;
+  [SerializeField] public MoonlightTrickery moonlightTrickery;
+
+  //Hachiman Boons
+  [SerializeField] public Focus focus;
+  [SerializeField] public Mastery mastery;
+  [SerializeField] public Bloodthirst bloodthirst;
+  [SerializeField] public GrandStand grandStand;
+  [SerializeField] public ViciousAttacks viciousAttacks;
+
   private Dictionary<InariBoons.InariBoonType, Func<int>> inariBoonPriceGetters;
   private Dictionary<BishamontenBoons.BishamontenBoonType, Func<int>> bishamontenBoonPriceGetters;
+  private Dictionary<AmaterasuBoons.AmaterasuBoonType, Func<int>> amaterasuBoonPriceGetters;
+  private Dictionary<TsukuyomiBoons.TsukuyomiBoonType, Func<int>> tsukuyomiBoonPriceGetters;
+  private Dictionary<HachimanBoons.HachimanBoonType, Func<int>> hachimanBoonPriceGetters;
+
 
   private Dictionary<InariBoons.InariBoonType, Action> inariBoonBuyActions;
   private Dictionary<BishamontenBoons.BishamontenBoonType, Action> bishamontenBoonBuyActions;
+  private Dictionary<AmaterasuBoons.AmaterasuBoonType, Action> amaterasuBoonBuyActions;
+  private Dictionary<TsukuyomiBoons.TsukuyomiBoonType, Action> tsukuyomiBoonBuyActions;
+  private Dictionary<HachimanBoons.HachimanBoonType, Action> hachimanBoonBuyActions;
 
   public List<(TextMeshProUGUI priceText, InariBoons.InariBoonType boonType)> inariBoonPriceTexts = new List<(TextMeshProUGUI, InariBoons.InariBoonType)>();
   public List<(TextMeshProUGUI priceText, BishamontenBoons.BishamontenBoonType boonType)> bishamontenBoonPriceTexts = new List<(TextMeshProUGUI, BishamontenBoons.BishamontenBoonType)>();
+  public List<(TextMeshProUGUI priceText, AmaterasuBoons.AmaterasuBoonType boonType)> amaterasuBoonPriceTexts = new List<(TextMeshProUGUI, AmaterasuBoons.AmaterasuBoonType)>();
+  public List<(TextMeshProUGUI priceText, TsukuyomiBoons.TsukuyomiBoonType boonType)> tsukuyomiBoonPriceTexts = new List<(TextMeshProUGUI, TsukuyomiBoons.TsukuyomiBoonType)>();
+  public List<(TextMeshProUGUI priceText, HachimanBoons.HachimanBoonType boonType)> HachimanBoonPriceTexts = new List<(TextMeshProUGUI, HachimanBoons.HachimanBoonType)>();
+
+
   public void Awake()
   {
     container = transform.Find("Container");
@@ -53,11 +91,14 @@ public class TemplateGodUI : MonoBehaviour
   {
     Hide();
 
-    //Spawns all inari boons
+    //Spawns all boons
     SpawnInariBoons();
     SpawnBishamontenBoons();
+    SpawnAmaterasuBoons();
+    SpawnTsukuyomiBoons();
+    SpawnHachimanBoons();
 
-    
+
 
   }
 
@@ -67,7 +108,9 @@ public class TemplateGodUI : MonoBehaviour
     if(Input.GetKeyDown(KeyCode.L))
     {
       //BuyBoon(InariBoons.InariBoonType.BanteringBoon);
-      BuyQuickfeetBoon();
+      //BuyQuickfeetBoon();
+      //BuyLightsSpeedBoon();
+      BuyFoxsLuckBoon(); 
     }
 
 
@@ -102,10 +145,51 @@ public class TemplateGodUI : MonoBehaviour
     CreateBoonButton(quickfeetSprite, "Increase your invulnerability frames by 4", quickfeetBoon.GetPrice(), 3, BishamontenBoons.BishamontenBoonType.QuickfeetBoon, bishamontenBoonsContainer);
     CreateBoonButton(resolveSprite, "Reduce incoming damage by 10% while below 50% hp", resolveBoon.GetPrice(), 4, BishamontenBoons.BishamontenBoonType.ResolveBoon, bishamontenBoonsContainer);
     CreateBoonButton(reguvinationSprite, "Regen 10 hp every second for 5 seconds while below 50% hp", reguvinationBoon.GetPrice(), 5, BishamontenBoons.BishamontenBoonType.ReguvinationBoon, bishamontenBoonsContainer);
+  }
+  public void SpawnAmaterasuBoons()
+  {
+    Sprite blindingLightSprite = boonAssets.GetMoneySprite();
+    Sprite burningBladeSprite = boonAssets.GetMoneySprite();
+    Sprite lightsSpeedSprite = boonAssets.GetMoneySprite();
+    Sprite morningSunshineSprite = boonAssets.GetMoneySprite();
+    Sprite sunsReachSprite = boonAssets.GetMoneySprite();
 
-
+    CreateBoonButton(blindingLightSprite, "After dashing gain 5% chance to cause enemies to miss 5% of attacks", blindingLight.GetPrice(), 1, AmaterasuBoons.AmaterasuBoonType.BlindingLight, amaterasuBoonsContainer);
+    CreateBoonButton(burningBladeSprite, "Set your burning damage to 10 and burning duration to 5 seconds", burningBlade.GetPrice(), 2, AmaterasuBoons.AmaterasuBoonType.BurningBlade, amaterasuBoonsContainer);
+    CreateBoonButton(lightsSpeedSprite, "Increase your speed by 20", lightsSpeed.GetPrice(), 3, AmaterasuBoons.AmaterasuBoonType.LightsSpeed, amaterasuBoonsContainer);
+    CreateBoonButton(morningSunshineSprite, "Start every room with 100 shield", morningSunshine.GetPrice(), 4, AmaterasuBoons.AmaterasuBoonType.MorningSunshine, amaterasuBoonsContainer);
+    CreateBoonButton(sunsReachSprite, "Decrease your attack damage by 5 but increase your attack range by 2", sunsReach.GetPrice(), 5, AmaterasuBoons.AmaterasuBoonType.SunsReach, amaterasuBoonsContainer);
   }
 
+  public void SpawnTsukuyomiBoons()
+  {
+    Sprite moonBladeSprite = boonAssets.GetMoneySprite();
+    Sprite shadowDashSprite = boonAssets.GetMoneySprite();
+    Sprite secondaryLightSprite = boonAssets.GetMoneySprite();
+    Sprite fullMoonSprite = boonAssets.GetMoneySprite();
+    Sprite moonlightTrickerySprite = boonAssets.GetMoneySprite();
+
+    CreateBoonButton(moonBladeSprite, "10% chance to put enemies to sleep for 5 seconds and increase base damage by 5", moonBlade.GetPrice(), 1, TsukuyomiBoons.TsukuyomiBoonType.MoonBlade, tsukuyomiBoonsContainer);
+    CreateBoonButton(shadowDashSprite, "Empower your dash, every 15 seconds your dash gives you 5 seconds of invisibility", shadowDash.GetPrice(), 2, TsukuyomiBoons.TsukuyomiBoonType.ShadowDash, tsukuyomiBoonsContainer);
+    CreateBoonButton(secondaryLightSprite, "Your attacks pierce enemies", secondaryLight.GetPrice(), 3, TsukuyomiBoons.TsukuyomiBoonType.SecondaryLight, tsukuyomiBoonsContainer);
+    CreateBoonButton(fullMoonSprite, "Double your critical strike chance", fullMoon.GetPrice(), 4, TsukuyomiBoons.TsukuyomiBoonType.FullMoon, tsukuyomiBoonsContainer);
+    CreateBoonButton(moonlightTrickerySprite, "Gain 5% chance to dodge enemy attacks", moonlightTrickery.GetPrice(), 5, TsukuyomiBoons.TsukuyomiBoonType.MoonlightTrickery, tsukuyomiBoonsContainer);
+  }
+  public void SpawnHachimanBoons()
+  {
+    Sprite focusSprite = boonAssets.GetMoneySprite();
+    Sprite masterySprite = boonAssets.GetMoneySprite();
+    Sprite bloodthirstSprite = boonAssets.GetMoneySprite();
+    Sprite grandStandSprite = boonAssets.GetMoneySprite();
+    Sprite viciousAttacksSprite = boonAssets.GetMoneySprite();
+
+    CreateBoonButton(focusSprite, "Increase your subsequent attacks damage on the same enemy by 5", focus.GetPrice(), 1, HachimanBoons.HachimanBoonType.Focus, hachimanBoonsContainer);
+    CreateBoonButton(masterySprite, "Increase your critical damage by 20%", mastery.GetPrice(), 2, HachimanBoons.HachimanBoonType.Mastery, hachimanBoonsContainer);
+    CreateBoonButton(bloodthirstSprite, "Increase your movement speed by 15% for each bleeding enemy alive", bloodthirst.GetPrice(), 3, HachimanBoons.HachimanBoonType.Bloodthirst, hachimanBoonsContainer);
+    CreateBoonButton(grandStandSprite, "Increase your attack speed by 10% for each enemy alive", grandStand.GetPrice(), 4, HachimanBoons.HachimanBoonType.GrandStand, hachimanBoonsContainer);
+    CreateBoonButton(viciousAttacksSprite, "Increase your base damage by 5, your attacks bleed enemies for 5 seconds for 5 damage every second", viciousAttacks.GetPrice(), 5, HachimanBoons.HachimanBoonType.ViciousAttacks, hachimanBoonsContainer);
+
+  }
 
   public void CreateBoonButton<T>(Sprite boonSprite, string boonName, int boonCost, int positionIndex, T boonType, Transform parentContainer) where T : Enum
   {
@@ -171,6 +255,72 @@ public class TemplateGodUI : MonoBehaviour
           break;
       }
     }
+    else if (typeof(T) == typeof(AmaterasuBoons.AmaterasuBoonType))
+    {
+      var amaterasuBoon = (AmaterasuBoons.AmaterasuBoonType)(object)boonType;
+      switch (amaterasuBoon)
+      {
+        case AmaterasuBoons.AmaterasuBoonType.BlindingLight:
+          buyButton.onClick.AddListener(BuyBlindingLightBoon);
+          break;
+        case AmaterasuBoons.AmaterasuBoonType.BurningBlade:
+          buyButton.onClick.AddListener(BuyBurningBladeBoon);
+          break;
+        case AmaterasuBoons.AmaterasuBoonType.LightsSpeed:
+          buyButton.onClick.AddListener(BuyLightsSpeedBoon);
+          break;
+        case AmaterasuBoons.AmaterasuBoonType.MorningSunshine:
+          buyButton.onClick.AddListener(BuyMorningSunshineBoon);
+          break;
+        case AmaterasuBoons.AmaterasuBoonType.SunsReach:
+          buyButton.onClick.AddListener(BuySunsReachBoon);
+          break;
+      }
+    }
+    else if (typeof(T) == typeof(TsukuyomiBoons.TsukuyomiBoonType))
+    {
+      var tsukuyomiBoon = (TsukuyomiBoons.TsukuyomiBoonType)(object)boonType;
+      switch (tsukuyomiBoon)
+      {
+        case TsukuyomiBoons.TsukuyomiBoonType.MoonBlade:
+          buyButton.onClick.AddListener(BuyMoonBladeBoon);
+          break;
+        case TsukuyomiBoons.TsukuyomiBoonType.ShadowDash:
+          buyButton.onClick.AddListener(BuyShadowDashBoon);
+          break;
+        case TsukuyomiBoons.TsukuyomiBoonType.SecondaryLight:
+          buyButton.onClick.AddListener(BuySecondaryLightBoon);
+          break;
+        case TsukuyomiBoons.TsukuyomiBoonType.FullMoon:
+          buyButton.onClick.AddListener(BuyFullMoonBoon);
+          break;
+        case TsukuyomiBoons.TsukuyomiBoonType.MoonlightTrickery:
+          buyButton.onClick.AddListener(BuyMoonlightTrickeryBoon);
+          break;
+      }
+    }
+    else if (typeof(T) == typeof(HachimanBoons.HachimanBoonType))
+    {
+      var hachimanBoon = (HachimanBoons.HachimanBoonType)(object)boonType;
+      switch (hachimanBoon)
+      {
+        case HachimanBoons.HachimanBoonType.Focus:
+          buyButton.onClick.AddListener(BuyFocusBoon);
+          break;
+        case HachimanBoons.HachimanBoonType.Mastery:
+          buyButton.onClick.AddListener(BuyMasteryBoon);
+          break;
+        case HachimanBoons.HachimanBoonType.Bloodthirst:
+          buyButton.onClick.AddListener(BuyBloodthirstBoon);
+          break;
+        case HachimanBoons.HachimanBoonType.GrandStand:
+          buyButton.onClick.AddListener(BuyGrandStandBoon);
+          break;
+        case HachimanBoons.HachimanBoonType.ViciousAttacks:
+          buyButton.onClick.AddListener(BuyViciousAttacksBoon);
+          break;
+      }
+    }
   }
 
   public void BuyBoon<T>(T boonType) where T : Enum
@@ -197,6 +347,30 @@ public class TemplateGodUI : MonoBehaviour
       else
       {
         Debug.LogWarning($"No buy action found for Bishamonten boon type: {bishamontenBoon}");
+      }
+    }
+    else if (typeof(T) == typeof(AmaterasuBoons.AmaterasuBoonType))
+    {
+      var amaterasuBoon = (AmaterasuBoons.AmaterasuBoonType)(object)boonType;
+      if (amaterasuBoonBuyActions.TryGetValue(amaterasuBoon, out var action))
+      {
+        action.Invoke();
+      }
+      else
+      {
+        Debug.LogWarning($"No buy action found for Amaterasu boon type: {amaterasuBoon}");
+      }
+    }
+    else if (typeof(T) == typeof(TsukuyomiBoons.TsukuyomiBoonType))
+    {
+      var tsukuyomiBoon = (TsukuyomiBoons.TsukuyomiBoonType)(object)boonType;
+      if (tsukuyomiBoonBuyActions.TryGetValue(tsukuyomiBoon, out var action))
+      {
+        action.Invoke();
+      }
+      else
+      {
+        Debug.LogWarning($"No buy action found for Tsukuyomi boon type: {tsukuyomiBoon}");
       }
     }
   }
@@ -230,6 +404,34 @@ public class TemplateGodUI : MonoBehaviour
         Debug.LogWarning($"No price getter found for Bishamonten boon type: {boonType}");
       }
     }
+    // Update Amaterasu Boon Prices
+    foreach (var (priceText, boonType) in amaterasuBoonPriceTexts)
+    {
+      if (amaterasuBoonPriceGetters.TryGetValue(boonType, out var getPrice))
+      {
+        int updatedPrice = getPrice.Invoke();
+        Debug.Log($"Updating price for Amaterasu boon {boonType}: {updatedPrice}");
+        priceText.SetText(updatedPrice.ToString());
+      }
+      else
+      {
+        Debug.LogWarning($"No price getter found for Amaterasu boon type: {boonType}");
+      }
+    }
+    // Update Tsukuyomi Boon Prices
+    foreach (var (priceText, boonType) in tsukuyomiBoonPriceTexts)
+    {
+      if (tsukuyomiBoonPriceGetters.TryGetValue(boonType, out var getPrice))
+      {
+        int updatedPrice = getPrice.Invoke();
+        Debug.Log($"Updating price for Tsukuyomi boon {boonType}: {updatedPrice}");
+        priceText.SetText(updatedPrice.ToString());
+      }
+      else
+      {
+        Debug.LogWarning($"No price getter found for Tsukuyomi boon type: {boonType}");
+      }
+    }
   }
   public void Show()
   {
@@ -254,6 +456,8 @@ public class TemplateGodUI : MonoBehaviour
     // Hide all containers first
     inariBoonsContainer.gameObject.SetActive(false);
     bishamontenBoonsContainer.gameObject.SetActive(false);
+    amaterasuBoonsContainer.gameObject.SetActive(false);
+
 
     // Show the specified container
     container.gameObject.SetActive(true);
@@ -269,22 +473,18 @@ public class TemplateGodUI : MonoBehaviour
   {
     BuyBoon(InariBoons.InariBoonType.BanteringBoon);
   }
-
   public void BuyEasyFindBoon()
   {
     BuyBoon(InariBoons.InariBoonType.EasyFindBoon);
   }
-
   public void BuyFoxsLuckBoon()
   {
     BuyBoon(InariBoons.InariBoonType.FoxsLuckBoon);
   }
-
   public void BuyLuckyStrikesBoon()
   {
     BuyBoon(InariBoons.InariBoonType.LuckyStrikesBoon);
   }
-
   public void BuyResoursfulnesBoon()
   {
     BuyBoon(InariBoons.InariBoonType.ResoursfulnesBoon);
@@ -309,6 +509,69 @@ public class TemplateGodUI : MonoBehaviour
   {
     BuyBoon(BishamontenBoons.BishamontenBoonType.ParryBoon);
   }
+  public void BuyBlindingLightBoon()
+  {
+    BuyBoon(AmaterasuBoons.AmaterasuBoonType.BlindingLight);
+  }
+  public void BuyBurningBladeBoon()
+  {
+    BuyBoon(AmaterasuBoons.AmaterasuBoonType.BurningBlade);
+  }
+  public void BuyLightsSpeedBoon()
+  {
+    BuyBoon(AmaterasuBoons.AmaterasuBoonType.LightsSpeed);
+  }
+  public void BuyMorningSunshineBoon()
+  {
+    BuyBoon(AmaterasuBoons.AmaterasuBoonType.MorningSunshine);
+  }
+  public void BuySunsReachBoon()
+  {
+    BuyBoon(AmaterasuBoons.AmaterasuBoonType.SunsReach);
+  }
+  public void BuyMoonBladeBoon()
+  {
+    BuyBoon(TsukuyomiBoons.TsukuyomiBoonType.MoonBlade);
+  }
+  public void BuyShadowDashBoon()
+  {
+    BuyBoon(TsukuyomiBoons.TsukuyomiBoonType.ShadowDash);
+  }
+  public void BuySecondaryLightBoon()
+  {
+    BuyBoon(TsukuyomiBoons.TsukuyomiBoonType.SecondaryLight);
+  }
+  public void BuyFullMoonBoon()
+  {
+    BuyBoon(TsukuyomiBoons.TsukuyomiBoonType.FullMoon);
+  }
+  public void BuyMoonlightTrickeryBoon()
+  {
+    BuyBoon(TsukuyomiBoons.TsukuyomiBoonType.MoonlightTrickery);
+  }
+
+  public void BuyFocusBoon()
+  {
+    BuyBoon(HachimanBoons.HachimanBoonType.Focus);
+  }
+  public void BuyMasteryBoon()
+  {
+    BuyBoon(HachimanBoons.HachimanBoonType.Mastery);
+  }
+  public void BuyBloodthirstBoon()
+  {
+    BuyBoon(HachimanBoons.HachimanBoonType.Bloodthirst);
+  }
+  public void BuyGrandStandBoon()
+  {
+    BuyBoon(HachimanBoons.HachimanBoonType.GrandStand);
+  }
+  public void BuyViciousAttacksBoon()
+  {
+    BuyBoon(HachimanBoons.HachimanBoonType.ViciousAttacks);
+  }
+
+
 
 
   private void InitializeBoonPriceGetters()
@@ -331,6 +594,35 @@ public class TemplateGodUI : MonoBehaviour
         { BishamontenBoons.BishamontenBoonType.ResolveBoon, () => resolveBoon.GetPrice() },
         { BishamontenBoons.BishamontenBoonType.ReguvinationBoon, () => reguvinationBoon.GetPrice() },
         { BishamontenBoons.BishamontenBoonType.ParryBoon, () => parryBoon.GetPrice() }
+    };
+    // Amaterasu Boons
+    amaterasuBoonPriceGetters = new Dictionary<AmaterasuBoons.AmaterasuBoonType, Func<int>>
+    {
+        { AmaterasuBoons.AmaterasuBoonType.BlindingLight, () => blindingLight.GetPrice() },
+        { AmaterasuBoons.AmaterasuBoonType.BurningBlade, () => burningBlade.GetPrice() },
+        { AmaterasuBoons.AmaterasuBoonType.LightsSpeed, () => lightsSpeed.GetPrice() },
+        { AmaterasuBoons.AmaterasuBoonType.MorningSunshine, () => morningSunshine.GetPrice() },
+        { AmaterasuBoons.AmaterasuBoonType.SunsReach, () => sunsReach.GetPrice() }
+    };
+
+    // Tsukuyomi Boons
+    tsukuyomiBoonPriceGetters = new Dictionary<TsukuyomiBoons.TsukuyomiBoonType, Func<int>>
+    {
+        { TsukuyomiBoons.TsukuyomiBoonType.MoonBlade, () => moonBlade.GetPrice() },
+        { TsukuyomiBoons.TsukuyomiBoonType.ShadowDash, () => shadowDash.GetPrice() },
+        { TsukuyomiBoons.TsukuyomiBoonType.SecondaryLight, () => secondaryLight.GetPrice() },
+        { TsukuyomiBoons.TsukuyomiBoonType.FullMoon, () => fullMoon.GetPrice() },
+        { TsukuyomiBoons.TsukuyomiBoonType.MoonlightTrickery, () => moonlightTrickery.GetPrice() }
+    };
+
+    // Hachiman Boons
+    hachimanBoonPriceGetters = new Dictionary<HachimanBoons.HachimanBoonType, Func<int>>
+    {
+        { HachimanBoons.HachimanBoonType.Focus, () => focus.GetPrice() },
+        { HachimanBoons.HachimanBoonType.Mastery, () => mastery.GetPrice() },
+        { HachimanBoons.HachimanBoonType.Bloodthirst, () => bloodthirst.GetPrice() },
+        { HachimanBoons.HachimanBoonType.GrandStand, () => grandStand.GetPrice() },
+        { HachimanBoons.HachimanBoonType.ViciousAttacks, () => viciousAttacks.GetPrice() }
     };
   }
 
@@ -387,6 +679,87 @@ public class TemplateGodUI : MonoBehaviour
             parryBoon.ApplyBoon(playerResources);
         }}
     };
+    // Amaterasu Boons
+    amaterasuBoonBuyActions = new Dictionary<AmaterasuBoons.AmaterasuBoonType, Action>
+    {
+        { AmaterasuBoons.AmaterasuBoonType.BlindingLight, () => {
+            blindingLight.SetBlindChance(5);
+            blindingLight.SetMissChance(5);
+            blindingLight.ApplyBoon(playerResources);
+        }},
+        { AmaterasuBoons.AmaterasuBoonType.BurningBlade, () => {
+            burningBlade.SetBurningDamage(10);
+            burningBlade.SetBurningDuration(5);
+            burningBlade.ApplyBoon(playerResources);
+        }},
+        { AmaterasuBoons.AmaterasuBoonType.LightsSpeed, () => {
+            lightsSpeed.SetSpeedIncrease(20);
+            lightsSpeed.ApplyBoon(playerResources, playerMovement);
+        }},
+        { AmaterasuBoons.AmaterasuBoonType.MorningSunshine, () => {
+            morningSunshine.SetShieldValue(100);
+            morningSunshine.ApplyBoon(playerResources);
+        }},
+        { AmaterasuBoons.AmaterasuBoonType.SunsReach, () => {
+            sunsReach.SetAttackDamageDecrease(5);
+            sunsReach.SetAttackRangeIncrease(2);
+            sunsReach.ApplyBoon(playerResources);
+        }}
+    };
+
+    // Tsukuyomi Boons
+    tsukuyomiBoonBuyActions = new Dictionary<TsukuyomiBoons.TsukuyomiBoonType, Action>
+    {
+        { TsukuyomiBoons.TsukuyomiBoonType.MoonBlade, () => {
+            moonBlade.SetSleepChance(10);
+            moonBlade.SetSleepDuration(5);
+            moonBlade.SetBaseDamageIncrease(5);
+            moonBlade.ApplyBoon(playerResources);
+        }},
+        { TsukuyomiBoons.TsukuyomiBoonType.ShadowDash, () => {
+            shadowDash.SetShadowDashCooldown(15);
+            shadowDash.SetInvisibilityDuration(5);
+            shadowDash.ApplyBoon(playerResources);
+        }},
+        { TsukuyomiBoons.TsukuyomiBoonType.SecondaryLight, () => {
+            secondaryLight.ApplyBoon(playerResources);
+        }},
+        { TsukuyomiBoons.TsukuyomiBoonType.FullMoon, () => {
+            fullMoon.SetCritChanceMultiplier(100); //2x
+            fullMoon.ApplyBoon(playerResources);
+        }},
+        { TsukuyomiBoons.TsukuyomiBoonType.MoonlightTrickery, () => {
+            moonlightTrickery.SetDodgeChance(5);
+            moonlightTrickery.ApplyBoon(playerResources);
+        }}
+    };
+    // Hachiman Boons
+    hachimanBoonBuyActions = new Dictionary<HachimanBoons.HachimanBoonType, Action>
+    {
+        { HachimanBoons.HachimanBoonType.Focus, () => {
+            focus.SetExtraDamage(5); 
+            focus.ApplyBoon(playerResources);
+        }},
+        { HachimanBoons.HachimanBoonType.Mastery, () => {
+            mastery.SetCritMultiplier(20.0f); 
+            mastery.ApplyBoon(playerResources);
+        }},
+        { HachimanBoons.HachimanBoonType.Bloodthirst, () => {
+            bloodthirst.SetMovementSpeedIncrease(15f); // Example speed increase
+            bloodthirst.ApplyBoon(playerResources);
+        }},
+        { HachimanBoons.HachimanBoonType.GrandStand, () => {
+            grandStand.SetAttackSpeedMultiplier(10.0f); // Example defense bonus
+            grandStand.ApplyBoon(playerResources);
+        }},
+        { HachimanBoons.HachimanBoonType.ViciousAttacks, () => {
+            viciousAttacks.SetBaseAttackDamageIncrease(5); // Example attack speed increase
+            viciousAttacks.SetBleedDamage(10);
+            viciousAttacks.SetBleedDuration(5);
+            viciousAttacks.ApplyBoon(playerResources);
+        }}
+    };
+
   }
 
 }

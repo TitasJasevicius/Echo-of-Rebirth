@@ -40,4 +40,10 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(horizontalMove * Time.fixedDeltaTime, jumpPressed, jumpHeld);
         jumpPressed = false;
     }
+    public void IncreaseMovementSpeed(float value)
+    {
+      runSpeed += value;
+      Debug.Log("Movement speed increased by " + value);
+
+    }
 }
