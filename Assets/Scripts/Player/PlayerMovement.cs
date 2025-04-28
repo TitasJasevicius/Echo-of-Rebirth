@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class PlayerMovement : MonoBehaviour
 {
     public CharacterController2D controller;
+    public AudioManager audioManager;
+    public bool isGrounded = true; 
 
     public float runSpeed = 40f;
 
@@ -22,6 +24,10 @@ public class PlayerMovement : MonoBehaviour
         {
             jumpPressed = true;
             jumpHeld = true;
+
+            audioManager.PlaySFX(audioManager.jump); // well, you can spam this sound for now
+
+
         }
 
         if (Input.GetButton("Jump")) // while holding space
@@ -44,6 +50,11 @@ public class PlayerMovement : MonoBehaviour
     {
       runSpeed += value;
       Debug.Log("Movement speed increased by " + value);
+
+    }
+    private void Awake()
+    {
+      audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
 
     }
 }
