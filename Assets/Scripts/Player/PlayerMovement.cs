@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             jumpPressed = true;
             jumpHeld = true;
@@ -30,12 +30,12 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        if (Input.GetButton("Jump")) // while holding space
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) // while holding space
         {
             jumpHeld = true;
         }
 
-        if (Input.GetButtonUp("Jump")) // if no longer holding space
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow)) // if no longer holding space
         {
             jumpHeld = false;
         }
@@ -48,8 +48,8 @@ public class PlayerMovement : MonoBehaviour
     }
     public void IncreaseMovementSpeed(float value)
     {
-      runSpeed += value;
-      Debug.Log("Movement speed increased by " + value);
+        runSpeed += value;
+        Debug.Log("Movement speed increased by " + value);
 
     }
     private void Awake()

@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      money-increase-boon-removebg-preview_0: 6300374385984724075
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
