@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        Debug.Log("PlayerMovement enabled: " + this.enabled);
         controller.Move(horizontalMove * Time.fixedDeltaTime, jumpPressed, jumpHeld);
         jumpPressed = false;
     }
