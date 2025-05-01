@@ -38,12 +38,14 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow)) // if no longer holding space
         {
             jumpHeld = false;
-        }
+        } 
+
+
     }
 
     void FixedUpdate()
     {
-        Debug.Log("PlayerMovement enabled: " + this.enabled);
+        //Debug.Log("PlayerMovement enabled: " + this.enabled);
         controller.Move(horizontalMove * Time.fixedDeltaTime, jumpPressed, jumpHeld);
         jumpPressed = false;
     }

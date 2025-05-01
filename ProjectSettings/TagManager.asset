@@ -14,8 +14,8 @@ TagManager:
   - UI
   - Enemies
   - Obstacle
-  - 
-  - 
+  - ShopTrigger
+  - Buttons
   - 
   - 
   - 
@@ -50,3 +50,4 @@ TagManager:
     locked: 0
   m_RenderingLayers:
   - Default
+  - UiRender

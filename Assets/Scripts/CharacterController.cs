@@ -33,7 +33,7 @@ public class CharacterController2D : MonoBehaviour
     {
         bool wasGrounded = m_Grounded;
         m_Grounded = false;
-
+        
         // Check if the player is grounded
         Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
         for (int i = 0; i < colliders.Length; i++)
@@ -41,10 +41,11 @@ public class CharacterController2D : MonoBehaviour
             if (colliders[i].gameObject != gameObject)
             {
                 m_Grounded = true;
-                if (!wasGrounded)
-                    OnLandEvent.Invoke();
+            
+            if (!wasGrounded)
+                        OnLandEvent.Invoke();
+                }
             }
-        }
     }
 
     public void Move(float move, bool jumpPressed, bool jumpHeld)
