@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public CharacterController2D controller;
     public AudioManager audioManager;
-    public bool isGrounded = true; 
+    public bool isGrounded = true;
 
     public float runSpeed = 40f;
 
@@ -15,49 +15,87 @@ public class PlayerMovement : MonoBehaviour
     bool jumpPressed = false;
     bool jumpHeld = false;
 
+    // Dash variables
+    public float dashSpeed = 80f;          // Maximum speed during dash
+    public float dashDuration = 0.2f;      // Duration of the dash in seconds
+    public float dashCooldown = 1f;        // Cooldown time between dashes
+    private float dashTimeLeft = 0f;       // Time left for the current dash
+    private float dashCooldownTimer = 0f;  // Cooldown timer
+    private bool isDashing = false;
+
     // Update is called once per frame
     void Update()
     {
+        // Decrease the cooldown timer
+        if (dashCooldownTimer > 0f)
+        {
+            dashCooldownTimer -= Time.deltaTime;
+        }
+
+        // Handle horizontal movement input
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
+        // Handle jump input
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             jumpPressed = true;
             jumpHeld = true;
 
-            audioManager.PlaySFX(audioManager.jump); // well, you can spam this sound for now
-
-
+            audioManager.PlaySFX(audioManager.jump); // You can spam this sound for now
         }
 
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) // while holding space
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             jumpHeld = true;
         }
 
-        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow)) // if no longer holding space
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow))
         {
             jumpHeld = false;
-        } 
+        }
 
+        // Handle dash input
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownTimer <= 0f)
+        {
+            isDashing = true;
+            dashTimeLeft = dashDuration;
+            dashCooldownTimer = dashCooldown;
+        }
 
+        // Handle dashing
+        if (isDashing)
+        {
+            if (dashTimeLeft > 0f)
+            {
+                dashTimeLeft -= Time.deltaTime;
+                float dashProgress = (dashDuration - dashTimeLeft) / dashDuration;
+                // Smoothly increase and decrease speed using a sine wave
+                float speedMultiplier = Mathf.Sin(dashProgress * Mathf.PI);
+                float dashSpeedAdjusted = Mathf.Lerp(runSpeed, dashSpeed, speedMultiplier);
+                horizontalMove = Input.GetAxisRaw("Horizontal") * dashSpeedAdjusted;
+            }
+            else
+            {
+                isDashing = false;
+            }
+        }
     }
 
     void FixedUpdate()
     {
-        //Debug.Log("PlayerMovement enabled: " + this.enabled);
+        // Apply movement
         controller.Move(horizontalMove * Time.fixedDeltaTime, jumpPressed, jumpHeld);
         jumpPressed = false;
     }
+
     public void IncreaseMovementSpeed(float value)
     {
         runSpeed += value;
         Debug.Log("Movement speed increased by " + value);
-
     }
+
     private void Awake()
     {
-      audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
-
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 }
