@@ -19,8 +19,14 @@ public class BoonAssets : MonoBehaviour
   public Sprite HealthBoonSprite;
   public Sprite ManaBoonSprite;
   public Sprite DamageBoonSprite;
-
   public Sprite MoneyIncreaseSprite;
+
+  [Header("Boon Shop Backgrounds")]
+  public Sprite InariShopBackground;
+  public Sprite BishamontenShopBackground;
+  public Sprite AmaterasuShopBackground;
+  public Sprite TsukoyamiShopBackground;
+  public Sprite HachimanShopBackground;
 
   public Sprite GetMoneySprite()
   {

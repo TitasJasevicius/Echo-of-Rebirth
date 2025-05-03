@@ -397,6 +397,10 @@ public class PlayerResources : MonoBehaviour
     {
       bleedDuration += value;
     }
+    public void IncreaseBaseAttackSpeed(float value)
+    {
+      baseAttackSpeed += value;
+    }
 
 
 

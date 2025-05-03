@@ -9,6 +9,10 @@ public class TemplateGodUI : MonoBehaviour
   public Transform container;
   public Transform template;
 
+  private Image godBoonBackground;
+  private Image godBoonShopTitle;
+  private TextMeshProUGUI godBoonShopText;
+
   [SerializeField] public BoonAssets boonAssets;
   [SerializeField] public PlayerResources playerResources;
   [SerializeField] public PlayerMovement playerMovement;
@@ -80,6 +84,8 @@ public class TemplateGodUI : MonoBehaviour
   {
     container = transform.Find("Container");
     template = container.Find("GodBoonTemplate");
+    
+
     template.gameObject.SetActive(false);
 
     InitializeBoonPriceGetters();
@@ -125,6 +131,11 @@ public class TemplateGodUI : MonoBehaviour
     Sprite easyFindSprite = boonAssets.GetMoneySprite();
     Sprite banteringSprite = boonAssets.GetMoneySprite();
 
+    Sprite inariBackground = boonAssets.InariShopBackground;
+
+
+    CreateBackgroundTitle(inariBackground, "Inari boons", inariBoonsContainer);
+
     CreateBoonButton(resourceSprite, "Increase healing items effectivness by 10%", resoursfulnesBoon.GetPrice(), 1, InariBoons.InariBoonType.ResoursfulnesBoon, inariBoonsContainer);
     CreateBoonButton(luckyStrikeSprite, "Increase your crit chance by 5%", luckyStrikesBoon.GetPrice(), 2, InariBoons.InariBoonType.LuckyStrikesBoon, inariBoonsContainer);
     CreateBoonButton(foxLuckSprite, "Set your life steal to 5% while above 50% hp", foxsLuckBoon.GetPrice(), 3, InariBoons.InariBoonType.FoxsLuckBoon, inariBoonsContainer);
@@ -140,6 +151,9 @@ public class TemplateGodUI : MonoBehaviour
     Sprite resolveSprite= boonAssets.GetMoneySprite();
     Sprite reguvinationSprite = boonAssets.GetMoneySprite();
 
+    Sprite bishamontenBackground = boonAssets.BishamontenShopBackground;
+    CreateBackgroundTitle(bishamontenBackground, "Bishamonten boons", bishamontenBoonsContainer);
+
     CreateBoonButton(staminaSprite, "Decrease your dash cooldown by 3 seconds", staminaBoon.GetPrice(), 1, BishamontenBoons.BishamontenBoonType.StaminaBoon, bishamontenBoonsContainer);
     CreateBoonButton(parrySprite, "Activate parry ability and increase your base damage by 10", parryBoon.GetPrice(), 2, BishamontenBoons.BishamontenBoonType.ParryBoon, bishamontenBoonsContainer);
     CreateBoonButton(quickfeetSprite, "Increase your invulnerability frames by 4", quickfeetBoon.GetPrice(), 3, BishamontenBoons.BishamontenBoonType.QuickfeetBoon, bishamontenBoonsContainer);
@@ -153,6 +167,10 @@ public class TemplateGodUI : MonoBehaviour
     Sprite lightsSpeedSprite = boonAssets.GetMoneySprite();
     Sprite morningSunshineSprite = boonAssets.GetMoneySprite();
     Sprite sunsReachSprite = boonAssets.GetMoneySprite();
+
+    Sprite amaterasuBackground = boonAssets.AmaterasuShopBackground;
+
+    CreateBackgroundTitle(amaterasuBackground, "Amaterasu boons", amaterasuBoonsContainer);
 
     CreateBoonButton(blindingLightSprite, "After dashing gain 5% chance to cause enemies to miss 5% of attacks", blindingLight.GetPrice(), 1, AmaterasuBoons.AmaterasuBoonType.BlindingLight, amaterasuBoonsContainer);
     CreateBoonButton(burningBladeSprite, "Set your burning damage to 10 and burning duration to 5 seconds", burningBlade.GetPrice(), 2, AmaterasuBoons.AmaterasuBoonType.BurningBlade, amaterasuBoonsContainer);
@@ -169,6 +187,10 @@ public class TemplateGodUI : MonoBehaviour
     Sprite fullMoonSprite = boonAssets.GetMoneySprite();
     Sprite moonlightTrickerySprite = boonAssets.GetMoneySprite();
 
+    Sprite tsukuyomiBackground = boonAssets.TsukoyamiShopBackground;
+
+    CreateBackgroundTitle(tsukuyomiBackground, "Tsukuyomi boons", tsukuyomiBoonsContainer);
+
     CreateBoonButton(moonBladeSprite, "10% chance to put enemies to sleep for 5 seconds and increase base damage by 5", moonBlade.GetPrice(), 1, TsukuyomiBoons.TsukuyomiBoonType.MoonBlade, tsukuyomiBoonsContainer);
     CreateBoonButton(shadowDashSprite, "Empower your dash, every 15 seconds your dash gives you 5 seconds of invisibility", shadowDash.GetPrice(), 2, TsukuyomiBoons.TsukuyomiBoonType.ShadowDash, tsukuyomiBoonsContainer);
     CreateBoonButton(secondaryLightSprite, "Your attacks pierce enemies", secondaryLight.GetPrice(), 3, TsukuyomiBoons.TsukuyomiBoonType.SecondaryLight, tsukuyomiBoonsContainer);
@@ -183,12 +205,46 @@ public class TemplateGodUI : MonoBehaviour
     Sprite grandStandSprite = boonAssets.GetMoneySprite();
     Sprite viciousAttacksSprite = boonAssets.GetMoneySprite();
 
+    Sprite hacimanBackground = boonAssets.HachimanShopBackground;
+
+
+    CreateBackgroundTitle(hacimanBackground, "Hachiman boons", hachimanBoonsContainer);
+
     CreateBoonButton(focusSprite, "Increase your subsequent attacks damage on the same enemy by 5", focus.GetPrice(), 1, HachimanBoons.HachimanBoonType.Focus, hachimanBoonsContainer);
     CreateBoonButton(masterySprite, "Increase your critical damage by 20%", mastery.GetPrice(), 2, HachimanBoons.HachimanBoonType.Mastery, hachimanBoonsContainer);
     CreateBoonButton(bloodthirstSprite, "Increase your movement speed by 15% for each bleeding enemy alive", bloodthirst.GetPrice(), 3, HachimanBoons.HachimanBoonType.Bloodthirst, hachimanBoonsContainer);
     CreateBoonButton(grandStandSprite, "Increase your attack speed by 10% for each enemy alive", grandStand.GetPrice(), 4, HachimanBoons.HachimanBoonType.GrandStand, hachimanBoonsContainer);
     CreateBoonButton(viciousAttacksSprite, "Increase your base damage by 5, your attacks bleed enemies for 5 seconds for 5 damage every second", viciousAttacks.GetPrice(), 5, HachimanBoons.HachimanBoonType.ViciousAttacks, hachimanBoonsContainer);
 
+  }
+  public void CreateBackgroundTitle(Sprite backgroundSprite, string boonShopText, Transform parentContainer)
+  {
+    
+    Transform godBoonBackgroundTransform = container.Find("GodBoonBackground");
+    if (godBoonBackgroundTransform != null)
+    {
+      Transform clonedBackground = Instantiate(godBoonBackgroundTransform, parentContainer);
+      clonedBackground.GetComponent<Image>().sprite = backgroundSprite;
+    }
+
+    
+    Transform godBoonTitleTransform = container.Find("GodBoonShopTitle");
+    Transform clonedTitle = null; 
+    if (godBoonTitleTransform != null)
+    {
+      clonedTitle = Instantiate(godBoonTitleTransform, parentContainer);
+      
+    }
+
+   
+    if (clonedTitle != null) 
+    {
+      Transform godBoonShopTextTransform = clonedTitle.Find("GodBoonShopText");
+      if (godBoonShopTextTransform != null)
+      {
+        godBoonShopTextTransform.GetComponent<TextMeshProUGUI>().SetText(boonShopText);
+      }
+    }
   }
 
   public void CreateBoonButton<T>(Sprite boonSprite, string boonName, int boonCost, int positionIndex, T boonType, Transform parentContainer) where T : Enum
@@ -197,7 +253,8 @@ public class TemplateGodUI : MonoBehaviour
     boonTransform.gameObject.SetActive(true);
     RectTransform boonRectTransform = boonTransform.GetComponent<RectTransform>();
 
-    float initialHeight = -400;
+
+    float initialHeight = -480;
     float heightOffset = 130f;
     boonRectTransform.anchoredPosition = new Vector2(0, -initialHeight - (heightOffset * positionIndex));
 
@@ -461,6 +518,10 @@ public class TemplateGodUI : MonoBehaviour
 
     // Show the specified container
     container.gameObject.SetActive(true);
+    foreach (Transform child in container)
+    {
+      child.gameObject.SetActive(true);
+    }
   }
 
   public void HideContainer(Transform container)
