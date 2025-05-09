@@ -111,14 +111,6 @@ public class TemplateGodUI : MonoBehaviour
   public void Update()
   {
 
-    if(Input.GetKeyDown(KeyCode.L))
-    {
-      //BuyBoon(InariBoons.InariBoonType.BanteringBoon);
-      //BuyQuickfeetBoon();
-      //BuyLightsSpeedBoon();
-      BuyFoxsLuckBoon(); 
-    }
-
 
   }
 

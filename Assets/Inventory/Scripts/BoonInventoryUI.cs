@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BoonInventoryUI : MonoBehaviour
 {
-  public BoonInventory boonInventory;
+  /*public BoonInventory boonInventory;
   public Transform boonSlotContainer;
   public Transform boonSlotTemplate;
  
@@ -49,7 +49,7 @@ public class BoonInventoryUI : MonoBehaviour
       }
 
     }
-  }
+  } */
 
 
 }

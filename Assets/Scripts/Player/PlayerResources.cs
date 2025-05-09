@@ -82,8 +82,8 @@ public class PlayerResources : MonoBehaviour
   
   private void Awake()
   {
-    boonInventory = new BoonInventory();
-    boonInventoryUI.SetBoonInventory(boonInventory);
+    //boonInventory = new BoonInventory();
+    //boonInventoryUI.SetBoonInventory(boonInventory);
 
     //BoonWorld.SpawnBoonWorld(new Vector3(-8, 4), new Boon { boonType = Boon.BoonType.ManaBoon });
     //BoonWorld.SpawnBoonWorld(new Vector3(-10, 10), new Boon { boonType = Boon.BoonType.HealthBoon });

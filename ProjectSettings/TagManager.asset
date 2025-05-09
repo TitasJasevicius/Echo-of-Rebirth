@@ -42,11 +42,23 @@ TagManager:
   - name: Background
     uniqueID: 3849726787
     locked: 0
+  - name: Vines
+    uniqueID: 2258994651
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Foreground
     uniqueID: 869518927
+    locked: 0
+  - name: Water
+    uniqueID: 3771371151
+    locked: 0
+  - name: Ground
+    uniqueID: 1452529969
+    locked: 0
+  - name: Platform
+    uniqueID: 1644592427
     locked: 0
   m_RenderingLayers:
   - Default
