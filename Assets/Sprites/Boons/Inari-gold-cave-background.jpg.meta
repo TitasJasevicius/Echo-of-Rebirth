@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Inari-gold-cave-background_0: -6191083708926526502
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

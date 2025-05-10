@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BG_1_loop_right_end_alt_2 _0: -6962316062291673361
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

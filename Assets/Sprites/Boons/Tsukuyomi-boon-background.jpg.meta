@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Tsukuyomi-boon-background_0: -3425343830931902151
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

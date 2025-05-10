@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Hachiman-boon-background_0: -1854997899395680995
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
