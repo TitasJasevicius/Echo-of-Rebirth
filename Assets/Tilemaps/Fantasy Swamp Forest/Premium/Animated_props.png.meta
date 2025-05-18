@@ -711,7 +711,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_26
+      name: VineTop1
       rect:
         serializedVersion: 2
         x: 0
@@ -733,7 +733,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_27
+      name: VineTop2
       rect:
         serializedVersion: 2
         x: 16
@@ -755,7 +755,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_28
+      name: VineTop3
       rect:
         serializedVersion: 2
         x: 32
@@ -777,7 +777,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_29
+      name: VineTop4
       rect:
         serializedVersion: 2
         x: 48
@@ -799,7 +799,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_30
+      name: VineTop5
       rect:
         serializedVersion: 2
         x: 64
@@ -821,7 +821,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_31
+      name: VineTop6
       rect:
         serializedVersion: 2
         x: 80
@@ -843,7 +843,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_32
+      name: VineTop7
       rect:
         serializedVersion: 2
         x: 96
@@ -865,7 +865,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_33
+      name: VineTop8
       rect:
         serializedVersion: 2
         x: 112
@@ -887,7 +887,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_34
+      name: VineTop9
       rect:
         serializedVersion: 2
         x: 128
@@ -909,7 +909,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_35
+      name: VineTopMiddle1
       rect:
         serializedVersion: 2
         x: 0
@@ -931,7 +931,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_36
+      name: VineTopMiddle2
       rect:
         serializedVersion: 2
         x: 16
@@ -953,7 +953,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_37
+      name: VineTopMiddle3
       rect:
         serializedVersion: 2
         x: 32
@@ -975,7 +975,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_38
+      name: VineTopMiddle4
       rect:
         serializedVersion: 2
         x: 48
@@ -997,7 +997,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_39
+      name: VineTopMiddle5
       rect:
         serializedVersion: 2
         x: 64
@@ -1019,7 +1019,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_40
+      name: VineTopMiddle6
       rect:
         serializedVersion: 2
         x: 80
@@ -1041,7 +1041,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_41
+      name: VineTopMiddle7
       rect:
         serializedVersion: 2
         x: 96
@@ -1063,7 +1063,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_42
+      name: VineTopMiddle8
       rect:
         serializedVersion: 2
         x: 112
@@ -1085,7 +1085,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_43
+      name: VineTopMiddle9
       rect:
         serializedVersion: 2
         x: 128
@@ -1283,7 +1283,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_52
+      name: VineBottomMiddle1
       rect:
         serializedVersion: 2
         x: 0
@@ -1305,7 +1305,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_53
+      name: VineBottomMiddle2
       rect:
         serializedVersion: 2
         x: 16
@@ -1327,7 +1327,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_54
+      name: VineBottomMiddle3
       rect:
         serializedVersion: 2
         x: 32
@@ -1349,7 +1349,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_55
+      name: VineBottomMiddle4
       rect:
         serializedVersion: 2
         x: 48
@@ -1371,7 +1371,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_56
+      name: VineBottomMiddle5
       rect:
         serializedVersion: 2
         x: 64
@@ -1393,7 +1393,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_57
+      name: VineBottomMiddle6
       rect:
         serializedVersion: 2
         x: 80
@@ -1415,7 +1415,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_58
+      name: VineBottomMiddle7
       rect:
         serializedVersion: 2
         x: 96
@@ -1437,7 +1437,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_59
+      name: VineBottomMiddle8
       rect:
         serializedVersion: 2
         x: 112
@@ -1459,7 +1459,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_60
+      name: VineBottomMiddle9
       rect:
         serializedVersion: 2
         x: 128
@@ -1657,7 +1657,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_69
+      name: VineBottom1
       rect:
         serializedVersion: 2
         x: 0
@@ -1679,7 +1679,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_70
+      name: VineBottom2
       rect:
         serializedVersion: 2
         x: 16
@@ -1701,7 +1701,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_71
+      name: VineBottom3
       rect:
         serializedVersion: 2
         x: 32
@@ -1723,7 +1723,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_72
+      name: VineBottom4
       rect:
         serializedVersion: 2
         x: 48
@@ -1745,7 +1745,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_73
+      name: VineBottom5
       rect:
         serializedVersion: 2
         x: 64
@@ -1767,7 +1767,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_74
+      name: VineBottom6
       rect:
         serializedVersion: 2
         x: 80
@@ -1789,7 +1789,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_75
+      name: VineBottom7
       rect:
         serializedVersion: 2
         x: 96
@@ -1811,7 +1811,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_76
+      name: VineBottom8
       rect:
         serializedVersion: 2
         x: 112
@@ -1833,7 +1833,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_77
+      name: VineBottom9
       rect:
         serializedVersion: 2
         x: 128
@@ -2031,7 +2031,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_86
+      name: VineBottomGround1
       rect:
         serializedVersion: 2
         x: 0
@@ -2053,7 +2053,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_87
+      name: VineBottomGround2
       rect:
         serializedVersion: 2
         x: 16
@@ -2075,7 +2075,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_88
+      name: VineBottomGround3
       rect:
         serializedVersion: 2
         x: 32
@@ -2097,7 +2097,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_89
+      name: VineBottomGround4
       rect:
         serializedVersion: 2
         x: 48
@@ -2119,7 +2119,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_90
+      name: VineBottomGround5
       rect:
         serializedVersion: 2
         x: 64
@@ -2141,7 +2141,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_91
+      name: VineBottomGround6
       rect:
         serializedVersion: 2
         x: 80
@@ -2163,7 +2163,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_92
+      name: VineBottomGround7
       rect:
         serializedVersion: 2
         x: 96
@@ -2185,7 +2185,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_93
+      name: VineBottomGround8
       rect:
         serializedVersion: 2
         x: 112
@@ -2207,7 +2207,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_94
+      name: VineBottomGround9
       rect:
         serializedVersion: 2
         x: 128
@@ -2436,26 +2436,8 @@ TextureImporter:
       Animated_props_23: -1110087718
       Animated_props_24: -3371894
       Animated_props_25: 1612608081
-      Animated_props_26: -713140231
-      Animated_props_27: -1244477694
-      Animated_props_28: -152241270
-      Animated_props_29: -384097674
       Animated_props_3: 5506089899515828765
-      Animated_props_30: -384916223
-      Animated_props_31: -1766595680
-      Animated_props_32: -1524888598
-      Animated_props_33: -1591201810
-      Animated_props_34: 135509678
-      Animated_props_35: -230652263
-      Animated_props_36: -561595132
-      Animated_props_37: -1232379857
-      Animated_props_38: 1759313147
-      Animated_props_39: 617783756
       Animated_props_4: -5400624902660286011
-      Animated_props_40: -460430432
-      Animated_props_41: 934685123
-      Animated_props_42: 1127959727
-      Animated_props_43: 606517212
       Animated_props_44: -1251175541
       Animated_props_45: -559635052
       Animated_props_46: 843129930
@@ -2465,16 +2447,7 @@ TextureImporter:
       Animated_props_5: 6711942167061813122
       Animated_props_50: 1528431821
       Animated_props_51: -1261449752
-      Animated_props_52: -1242280606
-      Animated_props_53: 17671198
-      Animated_props_54: -290662162
-      Animated_props_55: -323971871
-      Animated_props_56: -1565497455
-      Animated_props_57: -1492826890
-      Animated_props_58: -325266836
-      Animated_props_59: -1997116630
       Animated_props_6: -6352954409956802292
-      Animated_props_60: 1004585667
       Animated_props_61: 1491987269
       Animated_props_62: 1186502393
       Animated_props_63: -1324149091
@@ -2483,16 +2456,7 @@ TextureImporter:
       Animated_props_66: 1737105470
       Animated_props_67: -958583867
       Animated_props_68: -1776979613
-      Animated_props_69: 987827499
       Animated_props_7: 19254525740883449
-      Animated_props_70: 505414944
-      Animated_props_71: 881712952
-      Animated_props_72: 1340558416
-      Animated_props_73: -4817515
-      Animated_props_74: -1013242447
-      Animated_props_75: -585591333
-      Animated_props_76: -162033090
-      Animated_props_77: 1193341460
       Animated_props_78: -1895694899
       Animated_props_79: -1059601650
       Animated_props_8: -2020696039647809353
@@ -2502,21 +2466,58 @@ TextureImporter:
       Animated_props_83: -2115457254
       Animated_props_84: 371417920
       Animated_props_85: -1373323171
-      Animated_props_86: -1499201197
-      Animated_props_87: 2046326777
-      Animated_props_88: 1945556903
-      Animated_props_89: 1023887183
       Animated_props_9: -8855094631205739495
-      Animated_props_90: 1435791379
-      Animated_props_91: 1421350804
-      Animated_props_92: -1727793012
-      Animated_props_93: -1233539752
-      Animated_props_94: 151603054
       Animated_props_95: 1842794979
       Animated_props_96: -72631208
       Animated_props_97: 108397679
       Animated_props_98: -2018695113
       Animated_props_99: -1952044371
+      VineBottom1: 987827499
+      VineBottom2: 505414944
+      VineBottom3: 881712952
+      VineBottom4: 1340558416
+      VineBottom5: -4817515
+      VineBottom6: -1013242447
+      VineBottom7: -585591333
+      VineBottom8: -162033090
+      VineBottom9: 1193341460
+      VineBottomGround1: -1499201197
+      VineBottomGround2: 2046326777
+      VineBottomGround3: 1945556903
+      VineBottomGround4: 1023887183
+      VineBottomGround5: 1435791379
+      VineBottomGround6: 1421350804
+      VineBottomGround7: -1727793012
+      VineBottomGround8: -1233539752
+      VineBottomGround9: 151603054
+      VineBottomMiddle1: -1242280606
+      VineBottomMiddle19: 1004585667
+      VineBottomMiddle2: 17671198
+      VineBottomMiddle3: -290662162
+      VineBottomMiddle4: -323971871
+      VineBottomMiddle5: -1565497455
+      VineBottomMiddle6: -1492826890
+      VineBottomMiddle7: -325266836
+      VineBottomMiddle8: -1997116630
+      VineBottomMiddle9: 1004585667
+      VineTop1: -713140231
+      VineTop2: -1244477694
+      VineTop3: -152241270
+      VineTop4: -384097674
+      VineTop5: -384916223
+      VineTop6: -1766595680
+      VineTop7: -1524888598
+      VineTop8: -1591201810
+      VineTop9: 135509678
+      VineTopMiddle1: -230652263
+      VineTopMiddle2: -561595132
+      VineTopMiddle3: -1232379857
+      VineTopMiddle4: 1759313147
+      VineTopMiddle5: 617783756
+      VineTopMiddle6: -460430432
+      VineTopMiddle7: 934685123
+      VineTopMiddle8: 1127959727
+      VineTopMiddle9: 606517212
       animated_water_nr1: -730427271
       animated_water_nr2: 1029970211
       animated_water_nr3: -202942100
