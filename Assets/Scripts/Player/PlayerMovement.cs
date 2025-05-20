@@ -89,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
                 isDashing = false;
             }
         }
+        animator.SetBool("IsDashing", isDashing);
     }
 
     public void OnLanding()
