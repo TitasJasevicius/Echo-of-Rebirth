@@ -56,11 +56,13 @@ public class PlayerMovement : MonoBehaviour
             jumpHeld = true;
 
             audioManager.PlaySFX(audioManager.jump); // You can spam this sound for now
+            animator.SetBool("IsJumping", true);
         }
 
         if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow))
         {
             jumpHeld = false;
+            animator.SetBool("IsJumping", false);
         }
 
         // Handle dash input
@@ -87,6 +89,11 @@ public class PlayerMovement : MonoBehaviour
                 isDashing = false;
             }
         }
+    }
+
+    public void OnLanding()
+    {
+        animator.SetBool("IsJumping", false);
     }
 
     void FixedUpdate()
