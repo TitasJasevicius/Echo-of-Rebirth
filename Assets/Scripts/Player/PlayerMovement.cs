@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,9 +6,27 @@ public class PlayerMovement : MonoBehaviour
     public AudioManager audioManager;
     public bool isGrounded = true;
 
+    public Animator animator;
+
     public float runSpeed = 40f;
 
     float horizontalMove = 0f;
+    private int direction = 0; // 0 = right, 1 = left
+    public bool _isFacingRight = true; // Player's facing direction
+
+    public bool IsFacingRight
+    {
+        get { return _isFacingRight; }
+        private set
+        {
+            if (_isFacingRight != value)
+            {
+                transform.localScale = new Vector2(-1, 1);
+            }
+
+            _isFacingRight = value;
+        }
+    }
 
     bool jumpPressed = false;
     bool jumpHeld = false;
@@ -23,17 +39,32 @@ public class PlayerMovement : MonoBehaviour
     private float dashCooldownTimer = 0f;  // Cooldown timer
     private bool isDashing = false;
 
-    // Update is called once per frame
     void Update()
     {
+
+        // Handle horizontal movement input
+        horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+
+        SetFacingDirection(horizontalMove);
+
+        // Update direction
+        if (_isFacingRight)
+        {
+            direction = 0; // Right
+        }
+        else if (!_isFacingRight)
+        {
+            direction = 1; // Left
+        }
+
         // Decrease the cooldown timer
         if (dashCooldownTimer > 0f)
         {
             dashCooldownTimer -= Time.deltaTime;
         }
 
-        // Handle horizontal movement input
-        horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+        animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
+        animator.SetInteger("Direction", direction);
 
         // Handle jump input
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
@@ -42,11 +73,6 @@ public class PlayerMovement : MonoBehaviour
             jumpHeld = true;
 
             audioManager.PlaySFX(audioManager.jump); // You can spam this sound for now
-        }
-
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            jumpHeld = true;
         }
 
         if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow))
@@ -69,7 +95,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 dashTimeLeft -= Time.deltaTime;
                 float dashProgress = (dashDuration - dashTimeLeft) / dashDuration;
-                // Smoothly increase and decrease speed using a sine wave
                 float speedMultiplier = Mathf.Sin(dashProgress * Mathf.PI);
                 float dashSpeedAdjusted = Mathf.Lerp(runSpeed, dashSpeed, speedMultiplier);
                 horizontalMove = Input.GetAxisRaw("Horizontal") * dashSpeedAdjusted;
@@ -97,5 +122,17 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
+    private void SetFacingDirection(float horizontalMove)
+    {
+        if(horizontalMove > 0 && !IsFacingRight)
+        {
+            _isFacingRight = true;
+        }
+        else if (horizontalMove < 0 && IsFacingRight)
+        {
+            _isFacingRight = false;
+        }
     }
 }
