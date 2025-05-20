@@ -591,7 +591,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Player_AttackLeft
-  m_Speed: 2
+  m_Speed: 4
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 6258502116460601959}
@@ -768,7 +768,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Player_AttackRight
-  m_Speed: 2
+  m_Speed: 4
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 7166773242824349520}
