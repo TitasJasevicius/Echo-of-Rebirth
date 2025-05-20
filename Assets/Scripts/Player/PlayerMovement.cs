@@ -12,21 +12,6 @@ public class PlayerMovement : MonoBehaviour
 
     float horizontalMove = 0f;
     private int direction = 0; // 0 = right, 1 = left
-    public bool _isFacingRight = true; // Player's facing direction
-
-    public bool IsFacingRight
-    {
-        get { return _isFacingRight; }
-        private set
-        {
-            if (_isFacingRight != value)
-            {
-                transform.localScale = new Vector2(-1, 1);
-            }
-
-            _isFacingRight = value;
-        }
-    }
 
     bool jumpPressed = false;
     bool jumpHeld = false;
@@ -45,14 +30,12 @@ public class PlayerMovement : MonoBehaviour
         // Handle horizontal movement input
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
-        SetFacingDirection(horizontalMove);
-
         // Update direction
-        if (_isFacingRight)
+        if (horizontalMove > 0)
         {
             direction = 0; // Right
         }
-        else if (!_isFacingRight)
+        else if (horizontalMove < 0)
         {
             direction = 1; // Left
         }
@@ -122,17 +105,5 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
-    }
-
-    private void SetFacingDirection(float horizontalMove)
-    {
-        if(horizontalMove > 0 && !IsFacingRight)
-        {
-            _isFacingRight = true;
-        }
-        else if (horizontalMove < 0 && IsFacingRight)
-        {
-            _isFacingRight = false;
-        }
     }
 }
