@@ -18,6 +18,7 @@ public class PlayerCombat : MonoBehaviour
         if (attackPoint != null)
         {
             attackPointSpriteRenderer = attackPoint.GetComponent<SpriteRenderer>();
+            attackPointSpriteRenderer.enabled = false;
         }
     }
 
