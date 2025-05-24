@@ -359,7 +359,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_10
+      name: Leaf_1
       rect:
         serializedVersion: 2
         x: 48
@@ -381,7 +381,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_11
+      name: Leaf_2
       rect:
         serializedVersion: 2
         x: 64
@@ -403,7 +403,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_12
+      name: Leaf_3
       rect:
         serializedVersion: 2
         x: 80
@@ -425,7 +425,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_13
+      name: Leaf_4
       rect:
         serializedVersion: 2
         x: 96
@@ -447,7 +447,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_14
+      name: Leaf_5
       rect:
         serializedVersion: 2
         x: 112
@@ -469,7 +469,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_15
+      name: Leaf_6
       rect:
         serializedVersion: 2
         x: 128
@@ -491,7 +491,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Animated_props_16
+      name: Leaf_7
       rect:
         serializedVersion: 2
         x: 144
@@ -2420,16 +2420,9 @@ TextureImporter:
     nameFileIdTable:
       Animated_props_0: 1667878814778645570
       Animated_props_1: 3734556582888033028
-      Animated_props_10: 4461352206564612850
       Animated_props_100: 459640185
       Animated_props_101: 1132320194
       Animated_props_102: 444624485
-      Animated_props_11: -5440018243132594488
-      Animated_props_12: -6456766104785122453
-      Animated_props_13: 1766207830372232095
-      Animated_props_14: 410773882
-      Animated_props_15: -1079370064
-      Animated_props_16: 371401467
       Animated_props_2: 4109474181797013312
       Animated_props_21: 1979204021
       Animated_props_22: -1496528725
@@ -2472,6 +2465,13 @@ TextureImporter:
       Animated_props_97: 108397679
       Animated_props_98: -2018695113
       Animated_props_99: -1952044371
+      Leaf_1: 4461352206564612850
+      Leaf_2: -5440018243132594488
+      Leaf_3: -6456766104785122453
+      Leaf_4: 1766207830372232095
+      Leaf_5: 410773882
+      Leaf_6: -1079370064
+      Leaf_7: 371401467
       VineBottom1: 987827499
       VineBottom2: 505414944
       VineBottom3: 881712952
