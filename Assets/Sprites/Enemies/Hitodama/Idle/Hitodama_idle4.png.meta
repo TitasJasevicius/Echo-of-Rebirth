@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 7630c4c3b9f9c1c42981ed90b75e09a5
+guid: 737fb08aed2f7654a83e87cd870954f4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2047785990793044342
-    second: ExclamationMark_grayscale_GIF-7_0
+      213: 5518994040826163854
+    second: Hitodama_idle4_0
+  - first:
+      213: -5008054747747592984
+    second: Hitodama_idle4_1
+  - first:
+      213: 4465983217889707287
+    second: Hitodama_idle4_2
+  - first:
+      213: -4331158266793628100
+    second: Hitodama_idle4_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +55,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +109,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ExclamationMark_grayscale_GIF-7_0
+      name: Hitodama_idle4_0
       rect:
         serializedVersion: 2
-        x: 39
-        y: 9
-        width: 252
-        height: 311
+        x: 62
+        y: 182
+        width: 14
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +124,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 671ad3d42823b6c10800000000000000
-      internalID: 2047785990793044342
+      spriteID: e82f0f8d6d7679c40800000000000000
+      internalID: 5518994040826163854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hitodama_idle4_1
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 68
+        width: 44
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e4dbc0adb0df7ab0800000000000000
+      internalID: -5008054747747592984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hitodama_idle4_2
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 2
+        width: 86
+        height: 170
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7150c2b231c5afd30800000000000000
+      internalID: 4465983217889707287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hitodama_idle4_3
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 0
+        width: 19
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3ee4c9f082a4e3c0800000000000000
+      internalID: -4331158266793628100
       vertices: []
       indices: 
       edges: []
@@ -125,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ExclamationMark_grayscale_GIF-7_0: 2047785990793044342
+      Hitodama_idle4_0: 5518994040826163854
+      Hitodama_idle4_1: -5008054747747592984
+      Hitodama_idle4_2: 4465983217889707287
+      Hitodama_idle4_3: -4331158266793628100
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

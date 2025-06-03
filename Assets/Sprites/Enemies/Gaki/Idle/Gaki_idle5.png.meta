@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7630c4c3b9f9c1c42981ed90b75e09a5
+guid: 5fe8b9d9901bf734fa82b250fe7d0c23
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2047785990793044342
-    second: ExclamationMark_grayscale_GIF-7_0
+      213: -2226830372329297593
+    second: Gaki_idle5_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ExclamationMark_grayscale_GIF-7_0
+      name: Gaki_idle5_0
       rect:
         serializedVersion: 2
-        x: 39
-        y: 9
-        width: 252
-        height: 311
+        x: 23
+        y: 0
+        width: 107
+        height: 154
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 671ad3d42823b6c10800000000000000
-      internalID: 2047785990793044342
+      spriteID: 749e24a1395b811e0800000000000000
+      internalID: -2226830372329297593
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ExclamationMark_grayscale_GIF-7_0: 2047785990793044342
+      Gaki_idle5_0: -2226830372329297593
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

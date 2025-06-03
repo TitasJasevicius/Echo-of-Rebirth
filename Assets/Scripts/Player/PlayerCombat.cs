@@ -1,6 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
+public interface IDamageable
+{
+    void TakeDamage(int damage);
+}
+
 public class PlayerCombat : MonoBehaviour
 {
     public Transform attackPoint;
@@ -49,7 +54,12 @@ public class PlayerCombat : MonoBehaviour
         foreach (Collider2D enemy in hitEnemies)
         {
             Debug.Log("We hit " + enemy.name);
-            enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+
+            IDamageable damageable = enemy.GetComponent<IDamageable>();
+            if (damageable != null)
+            {
+                damageable.TakeDamage(attackDamage);
+            }
         }
     }
 

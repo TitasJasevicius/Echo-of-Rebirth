@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 7630c4c3b9f9c1c42981ed90b75e09a5
+guid: 8e01174221d616547b763993d9356b4b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2047785990793044342
-    second: ExclamationMark_grayscale_GIF-7_0
+      213: -3984614638081084172
+    second: Hitodama_explosion3_0
+  - first:
+      213: 8446029134684533393
+    second: Hitodama_explosion3_1
+  - first:
+      213: -8287822386060344520
+    second: Hitodama_explosion3_2
+  - first:
+      213: -72119753237095074
+    second: Hitodama_explosion3_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +55,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +109,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ExclamationMark_grayscale_GIF-7_0
+      name: Hitodama_explosion3_0
       rect:
         serializedVersion: 2
-        x: 39
-        y: 9
-        width: 252
-        height: 311
+        x: 14
+        y: 254
+        width: 26
+        height: 19
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +124,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 671ad3d42823b6c10800000000000000
-      internalID: 2047785990793044342
+      spriteID: 4f4fa5a191ec3b8c0800000000000000
+      internalID: -3984614638081084172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hitodama_explosion3_1
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 11
+        width: 245
+        height: 227
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 192b87fbfb2563570800000000000000
+      internalID: 8446029134684533393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hitodama_explosion3_2
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 137
+        width: 20
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 833c75d537dbbfc80800000000000000
+      internalID: -8287822386060344520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hitodama_explosion3_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 53
+        width: 19
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5d930f6777cffef0800000000000000
+      internalID: -72119753237095074
       vertices: []
       indices: 
       edges: []
@@ -125,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ExclamationMark_grayscale_GIF-7_0: 2047785990793044342
+      Hitodama_explosion3_0: -3984614638081084172
+      Hitodama_explosion3_1: 8446029134684533393
+      Hitodama_explosion3_2: -8287822386060344520
+      Hitodama_explosion3_3: -72119753237095074
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
