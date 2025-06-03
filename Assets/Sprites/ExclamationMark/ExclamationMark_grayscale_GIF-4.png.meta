@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ExclamationMark_grayscale_GIF-4_0: -1306867561312923236
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
