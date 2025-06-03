@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IDamageable
 {
     public int health;
     public int maxHealth = 100;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] FloatingHealthbar healthBar;
 
     private void Awake()
@@ -15,13 +14,15 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         health = maxHealth;
-        healthBar.UpdateHealthBar(health, maxHealth); // Update the health bar
+        if (healthBar != null)
+            healthBar.UpdateHealthBar(health, maxHealth);
     }
 
     public void TakeDamage(int damage)
     {
         health -= damage;
-        healthBar.UpdateHealthBar(health, maxHealth); // Update the health bar
+        if (healthBar != null)
+            healthBar.UpdateHealthBar(health, maxHealth);
 
         // play damage animation
 
