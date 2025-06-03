@@ -58,7 +58,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -225,7 +225,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -234,7 +234,12 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Hitodama_explosion6_0: 4499291077242570060
+      Hitodama_explosion6_1: -4397076496423507514
+      Hitodama_explosion6_2: 4570263604362448820
+      Hitodama_explosion6_3: -3548758546009625054
+      Hitodama_explosion6_4: 8950115936662431181
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

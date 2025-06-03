@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, IDamageable
+public class Gaki : MonoBehaviour, IDamageable
 {
     public int health;
     public int maxHealth = 100;
