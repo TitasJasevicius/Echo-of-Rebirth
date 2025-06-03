@@ -15,14 +15,12 @@ public class Gaki : MonoBehaviour, IDamageable
     private Rigidbody2D rb;
     private Transform player;
     private float jumpTimer = 0f;
-    private int groundLayer;
 
     private void Awake()
     {
         healthBar = GetComponentInChildren<FloatingHealthbar>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        groundLayer = LayerMask.NameToLayer("Obstacle");
     }
 
     void Start()
@@ -38,17 +36,6 @@ public class Gaki : MonoBehaviour, IDamageable
 
     void Update()
     {
-        if (player != null)
-        {
-            float dx = player.position.x - transform.position.x;
-            int faceDir = dx < 0 ? -1 : 1;
-            Debug.Log($"Gaki dx: {dx}, faceDir: {faceDir}, playerX: {player.position.x}, gakiX: {transform.position.x}");
-
-            Vector3 scale = transform.localScale;
-            scale.x = Mathf.Abs(scale.x) * faceDir;
-            transform.localScale = scale;
-        }
-
         jumpTimer += Time.deltaTime;
 
         if (player != null && jumpTimer >= jumpInterval)
@@ -58,28 +45,22 @@ public class Gaki : MonoBehaviour, IDamageable
         }
     }
 
-
     private void JumpTowardsPlayer()
     {
         if (player == null) return;
 
-        float dx = player.position.x - transform.position.x;
-        int direction = dx < 0 ? -1 : 1; // -1 = left, 1 = right
+        float direction = Mathf.Sign(player.position.x - transform.position.x);
 
+        // Set velocity directly to ignore knockback
         rb.linearVelocity = new Vector2(direction * jumpHorizontalForce, jumpForce);
 
+        // Play jump animation using trigger
         if (animator != null)
             animator.SetTrigger("Jump");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Stop sliding when landing on ground
-        if (collision.gameObject.layer == groundLayer)
-        {
-            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
-        }
-
         // Player collision
         PlayerResources playerRes = collision.gameObject.GetComponent<PlayerResources>();
         if (playerRes != null)
