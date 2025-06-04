@@ -44,6 +44,7 @@ public class Hitodama : MonoBehaviour, IDamageable
             {
                 StopCoroutine(explodeCoroutine);
             }
+            GiveGoldToPlayer(10);
             Disappear();
         }
     }
@@ -94,7 +95,22 @@ public class Hitodama : MonoBehaviour, IDamageable
             playerInRange.PlayerTakeDamage(explosionDamage);
         }
 
+        GiveGoldToPlayer(10);
+
         Invoke(nameof(DestroyObject), 0.8f);
+    }
+
+    private void GiveGoldToPlayer(int amount)
+    {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            PlayerResources playerResources = playerObj.GetComponent<PlayerResources>();
+            if (playerResources != null)
+            {
+                playerResources.AddGold(amount);
+            }
+        }
     }
 
     private void Disappear()

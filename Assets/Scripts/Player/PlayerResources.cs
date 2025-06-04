@@ -256,6 +256,13 @@ public class PlayerResources : MonoBehaviour
         }
     }
 
+    public void AddGold(int amount)
+    {
+        money += amount;
+        if (moneyUI != null)
+            moneyUI.SetMoney(money);
+    }
+
 
     private void SaveMetaMoney()
     {

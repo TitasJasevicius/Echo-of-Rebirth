@@ -12,11 +12,11 @@ public class Gaki : MonoBehaviour, IDamageable
     public float knockbackForce = 8f;
     public Animator animator;
 
-    public float playerChaseRange = 6f; // How close player must be to chase
+    public float playerChaseRange = 6f;
     public float idleJumpInterval = 3.5f;
     public float idleJumpHorizontalForce = 3f;
     public float idleJumpForce = 8f;
-    public float activeRange = 20f; // How close player must be for Gaki to be active
+    public float activeRange = 20f;
 
     private Rigidbody2D rb;
     private Transform player;
@@ -52,11 +52,9 @@ public class Gaki : MonoBehaviour, IDamageable
             float dx = player.position.x - transform.position.x;
             float distance = Mathf.Abs(dx);
 
-            // If player is outside active range, do nothing
             if (distance > activeRange)
                 return;
 
-            // Always face the direction of movement (chasing or idle)
             int faceDir;
             if (distance <= playerChaseRange)
             {
@@ -64,7 +62,7 @@ public class Gaki : MonoBehaviour, IDamageable
             }
             else
             {
-                faceDir = (int)Mathf.Sign(transform.localScale.x); // keep current facing
+                faceDir = (int)Mathf.Sign(transform.localScale.x);
             }
             Vector3 scale = transform.localScale;
             scale.x = Mathf.Abs(scale.x) * faceDir;
@@ -108,7 +106,6 @@ public class Gaki : MonoBehaviour, IDamageable
     {
         int direction = Random.value < 0.5f ? -1 : 1;
 
-        // Face the direction of the jump
         Vector3 scale = transform.localScale;
         scale.x = Mathf.Abs(scale.x) * direction;
         transform.localScale = scale;
@@ -121,13 +118,11 @@ public class Gaki : MonoBehaviour, IDamageable
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Stop all movement when landing on ground
         if (collision.gameObject.layer == groundLayer)
         {
             rb.linearVelocity = Vector2.zero;
         }
 
-        // Player collision
         PlayerResources playerRes = collision.gameObject.GetComponent<PlayerResources>();
         if (playerRes != null)
         {
@@ -156,7 +151,21 @@ public class Gaki : MonoBehaviour, IDamageable
 
     void Die()
     {
+        GiveGoldToPlayer(20);
         Debug.Log("Enemy died");
         Destroy(gameObject);
+    }
+
+    private void GiveGoldToPlayer(int amount)
+    {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            PlayerResources playerResources = playerObj.GetComponent<PlayerResources>();
+            if (playerResources != null)
+            {
+                playerResources.AddGold(amount);
+            }
+        }
     }
 }
