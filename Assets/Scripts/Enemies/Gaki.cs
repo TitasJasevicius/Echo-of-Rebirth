@@ -12,10 +12,17 @@ public class Gaki : MonoBehaviour, IDamageable
     public float knockbackForce = 8f;
     public Animator animator;
 
+    public float playerChaseRange = 6f; // How close player must be to chase
+    public float idleJumpInterval = 3.5f;
+    public float idleJumpHorizontalForce = 3f;
+    public float idleJumpForce = 8f;
+    public float activeRange = 20f; // How close player must be for Gaki to be active
+
     private Rigidbody2D rb;
     private Transform player;
     private float jumpTimer = 0f;
     private int groundLayer;
+    private bool isChasing = false;
 
     private void Awake()
     {
@@ -38,33 +45,58 @@ public class Gaki : MonoBehaviour, IDamageable
 
     void Update()
     {
+        jumpTimer += Time.deltaTime;
+
         if (player != null)
         {
             float dx = player.position.x - transform.position.x;
-            int faceDir = dx < 0 ? -1 : 1;
-            Debug.Log($"Gaki dx: {dx}, faceDir: {faceDir}, playerX: {player.position.x}, gakiX: {transform.position.x}");
+            float distance = Mathf.Abs(dx);
 
+            // If player is outside active range, do nothing
+            if (distance > activeRange)
+                return;
+
+            // Always face the direction of movement (chasing or idle)
+            int faceDir;
+            if (distance <= playerChaseRange)
+            {
+                faceDir = dx < 0 ? -1 : 1;
+            }
+            else
+            {
+                faceDir = (int)Mathf.Sign(transform.localScale.x); // keep current facing
+            }
             Vector3 scale = transform.localScale;
             scale.x = Mathf.Abs(scale.x) * faceDir;
             transform.localScale = scale;
-        }
 
-        jumpTimer += Time.deltaTime;
-
-        if (player != null && jumpTimer >= jumpInterval)
-        {
-            JumpTowardsPlayer();
-            jumpTimer = 0f;
+            if (distance <= playerChaseRange)
+            {
+                isChasing = true;
+                if (jumpTimer >= jumpInterval)
+                {
+                    JumpTowardsPlayer();
+                    jumpTimer = 0f;
+                }
+            }
+            else
+            {
+                isChasing = false;
+                if (jumpTimer >= idleJumpInterval)
+                {
+                    JumpRandomly();
+                    jumpTimer = 0f;
+                }
+            }
         }
     }
-
 
     private void JumpTowardsPlayer()
     {
         if (player == null) return;
 
         float dx = player.position.x - transform.position.x;
-        int direction = dx < 0 ? -1 : 1; // -1 = left, 1 = right
+        int direction = dx < 0 ? -1 : 1;
 
         rb.linearVelocity = new Vector2(direction * jumpHorizontalForce, jumpForce);
 
@@ -72,12 +104,27 @@ public class Gaki : MonoBehaviour, IDamageable
             animator.SetTrigger("Jump");
     }
 
+    private void JumpRandomly()
+    {
+        int direction = Random.value < 0.5f ? -1 : 1;
+
+        // Face the direction of the jump
+        Vector3 scale = transform.localScale;
+        scale.x = Mathf.Abs(scale.x) * direction;
+        transform.localScale = scale;
+
+        rb.linearVelocity = new Vector2(direction * idleJumpHorizontalForce, idleJumpForce);
+
+        if (animator != null)
+            animator.SetTrigger("Jump");
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Stop sliding when landing on ground
+        // Stop all movement when landing on ground
         if (collision.gameObject.layer == groundLayer)
         {
-            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+            rb.linearVelocity = Vector2.zero;
         }
 
         // Player collision
