@@ -10,11 +10,18 @@ public class Tsubokiri : MonoBehaviour, IDamageable
     public Animator animator;
 
     [Header("Attack Timing")]
-    public float attackDuration = 5.0f;   // How long the attack lasts
-    public float cooldownDuration = 2.5f; // How long before next attack
+    public float attackDuration = 5.0f;
+    public float cooldownDuration = 2.5f;
+
+    [Header("Projectile Attack")]
+    public GameObject projectilePrefab;
+    public int projectileCount = 10;
+    public float projectileSpawnRadius = 1.5f;
+    public float projectileInitialForce = 8f;
 
     private float attackTimer = 0f;
     private bool isAttacking = false;
+    private bool hasSpawnedProjectiles = false;
 
     private int groundLayer;
     private Rigidbody2D rb;
@@ -35,8 +42,9 @@ public class Tsubokiri : MonoBehaviour, IDamageable
         if (healthBar != null)
             healthBar.UpdateHealthBar(health, maxHealth);
 
-        attackTimer = cooldownDuration; // Start with a cooldown window
+        attackTimer = cooldownDuration;
         isAttacking = false;
+        hasSpawnedProjectiles = false;
         SetAnimatorAttacking(false);
     }
 
@@ -46,12 +54,19 @@ public class Tsubokiri : MonoBehaviour, IDamageable
 
         if (isAttacking)
         {
+            if (!hasSpawnedProjectiles)
+            {
+                SpawnProjectiles();
+                hasSpawnedProjectiles = true;
+            }
+
             if (attackTimer <= 0f)
             {
                 // End attack, start cooldown
                 isAttacking = false;
                 attackTimer = cooldownDuration;
                 SetAnimatorAttacking(false);
+                hasSpawnedProjectiles = false;
             }
         }
         else
@@ -62,7 +77,7 @@ public class Tsubokiri : MonoBehaviour, IDamageable
                 isAttacking = true;
                 attackTimer = attackDuration;
                 SetAnimatorAttacking(true);
-                // TODO: Add projectile shooting logic here
+                // hasSpawnedProjectiles will be checked in the next Update
             }
         }
     }
@@ -71,6 +86,33 @@ public class Tsubokiri : MonoBehaviour, IDamageable
     {
         if (animator != null)
             animator.SetBool("Attacking", value);
+    }
+
+    private void SpawnProjectiles()
+    {
+        if (projectilePrefab == null)
+        {
+            Debug.LogWarning("Projectile prefab not assigned to Tsubokiri.");
+            return;
+        }
+
+        float angleStep = 360f / projectileCount;
+        Vector3 center = transform.position;
+
+        for (int i = 0; i < projectileCount; i++)
+        {
+            float angle = i * angleStep * Mathf.Deg2Rad;
+            Vector2 spawnDir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+            Vector2 spawnPos = (Vector2)center + spawnDir * projectileSpawnRadius;
+
+            GameObject proj = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
+            Rigidbody2D projRb = proj.GetComponent<Rigidbody2D>();
+            if (projRb != null)
+            {
+                projRb.linearVelocity = spawnDir * projectileInitialForce;
+            }
+        }
+        Debug.Log("Tsubokiri spawned projectiles at: " + Time.time);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
