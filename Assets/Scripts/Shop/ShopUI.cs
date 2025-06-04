@@ -6,6 +6,7 @@ public class ShopUI : MonoBehaviour
 {
   public Transform container;
   public Transform template;
+  public GameObject weaponPrefab;
 
   public PlayerResources playerResources;
   public PlayerEquipment playerEquipment;
@@ -39,15 +40,16 @@ public class ShopUI : MonoBehaviour
   {
     Sprite daggerSprite = shopAssets.daggerSprite;
 
-    Weapon daggerWeapon = CreateWeapon("Dagger2", 10, 1.5f, 5, 100, playerResources);
-
+    Weapon daggerWeapon = CreateWeapon("Dagger", 10, 1.5f, 5, 100, playerResources, weaponPrefab);
+    Weapon swordWeapon = CreateWeapon("Sword", 15, 2.5f, 7, 200, playerResources, weaponPrefab);
+    Weapon longSwordWeapon = CreateWeapon("Long Sword", 20, 3.5f, 10, 300, playerResources, weaponPrefab);
 
 
 
 
     CreateShopItem(daggerSprite, 0, daggerWeapon, container);
-    CreateShopItem(daggerSprite, 1, daggerWeapon, container);
-    CreateShopItem(daggerSprite, 2, daggerWeapon, container);
+    CreateShopItem(daggerSprite, 1, swordWeapon, container);
+    CreateShopItem(daggerSprite, 2, longSwordWeapon, container);
 
 
   }
@@ -93,24 +95,23 @@ public class ShopUI : MonoBehaviour
       {
         weaponScript.SetWeaponStats(weapon);
       }
-      /*Button buyButton = shopItemTransform.Find("ItemBuyButton").GetComponent<Button>();
+
+      Button buyButton = shopItemTransform.Find("ShopBuyButton").GetComponent<Button>();
       buyButton.onClick.RemoveAllListeners();
-
-      buyButton.onClick.AddListener(weapon.ActivateWeapon);*/
-
+      buyButton.onClick.AddListener(() => weapon.BuyWeapon()); 
       
     }
   }
-  public static Weapon CreateWeapon(string weaponName, int damage, float attackSpeed, int range, int price, PlayerResources playerResources)
+  public static Weapon CreateWeapon(string weaponName, int damage, float attackSpeed, int range, int price, PlayerResources playerResources, GameObject weaponPrefab)
   {
-    Weapon newWeapon = new Weapon();
+    GameObject weaponObj = GameObject.Instantiate(weaponPrefab);
+    Weapon newWeapon = weaponObj.GetComponent<Weapon>();
     newWeapon.weaponName = weaponName;
     newWeapon.damage = damage;
     newWeapon.attackSpeed = attackSpeed;
     newWeapon.range = range;
     newWeapon.price = price;
     newWeapon.playerResources = playerResources;
-
     return newWeapon;
   }
 

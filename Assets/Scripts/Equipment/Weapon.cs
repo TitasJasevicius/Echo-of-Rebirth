@@ -13,8 +13,18 @@ public class Weapon : MonoBehaviour
   public Transform equipmentContainer;
   public void Awake()
   {
-    container = transform.Find("Player");
-    
+    GameObject playerObj = GameObject.FindWithTag("Player");
+    if (playerObj != null)
+    {
+      container = playerObj.transform;
+      equipmentContainer = container.Find("Equipment");
+      
+    }
+    else
+    {
+      Debug.LogError("gg");
+    }
+
 
   }
 
@@ -32,6 +42,18 @@ public class Weapon : MonoBehaviour
       return;
     }
     playerResources.money -= price;
+
+    
+    if (equipmentContainer != null)
+    {
+      transform.SetParent(equipmentContainer, false);
+    }
+    else
+    {
+      Debug.LogError("Equipment container not set!");
+    }
+
+    DeactivateAllEquippedWeapons();
     ActivateWeapon();
   }
 
@@ -41,42 +63,55 @@ public class Weapon : MonoBehaviour
 
     isActive = true;
     gameObject.SetActive(true);
-    //buff playerstats
     playerResources.IncreaseBaseDamage(damage);
     playerResources.IncreaseBaseAttackSpeed(attackSpeed);
     playerResources.IncreaseBaseDamage(range);
 
-    Weapon weaponScript = container.Find("Equipment").GetComponent<Weapon>();
-    if (weaponScript != null)
+    if (equipmentContainer != null)
     {
-      weaponScript.SetWeaponStats(this);
+      Weapon weaponScript = equipmentContainer.GetComponent<Weapon>();
+      if (weaponScript != null)
+      {
+        weaponScript.SetWeaponStats(this);
+      }
     }
 
-    Debug.Log("Weapon activated: " + weaponName); 
-
-
+    Debug.Log("Weapon activated: " + weaponName);
   }
 
   public void DeactivateWeapon()
   {
-    if (!isActive) return;
+    //if (!isActive) return;
 
     isActive = false;
     gameObject.SetActive(false);
-    //debuff playerstats
     playerResources.IncreaseBaseDamage(-damage);
     playerResources.IncreaseBaseAttackSpeed(-attackSpeed);
     playerResources.IncreaseBaseDamage(-range);
 
-    Weapon weaponScript = container.Find("Equipment").GetComponent<Weapon>();
-    if (weaponScript != null)
+    if (equipmentContainer != null)
     {
-      weaponScript.SetWeaponStats(this);
+      Weapon weaponScript = equipmentContainer.GetComponent<Weapon>();
+      if (weaponScript != null)
+      {
+        weaponScript.SetWeaponStats(this);
+      }
     }
 
-
-
-
+    Debug.Log("Weapon deactivated: " + weaponName);
+  }
+  private void DeactivateAllEquippedWeapons()
+  {
+    if (equipmentContainer != null)
+    {
+      
+      Weapon[] equippedWeapons = equipmentContainer.GetComponentsInChildren<Weapon>(true);
+      foreach (var w in equippedWeapons)
+      {
+        if (w != this) 
+          w.DeactivateWeapon();
+      }
+    }
   }
   public void SetWeaponStats(Weapon weapon)
   {
