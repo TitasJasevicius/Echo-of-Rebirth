@@ -6,17 +6,20 @@ public class Hitodama : MonoBehaviour, IDamageable
     public int maxHealth = 10;
     public Animator animator;
 
-    // Floating parameters
-    public float floatAmplitude = 0.2f; // How far up and down
-    public float floatFrequency = 1.0f; // How fast
+    public float floatAmplitude = 0.2f;
+    public float floatFrequency = 1.0f;
 
     private Vector3 startPosition;
     private bool isExploding = false;
     private bool isDead = false;
-    public float explosionDelay = 0.3f; // Short delay before exploding
+    public float explosionDelay = 0.3f;
     public int explosionDamage = 50;
 
     private Coroutine explodeCoroutine;
+
+    // Track if player is still in trigger
+    private bool playerInTrigger = false;
+    private PlayerResources playerInRange = null;
 
     void Start()
     {
@@ -26,7 +29,6 @@ public class Hitodama : MonoBehaviour, IDamageable
 
     void Update()
     {
-        // Floating effect
         float newY = startPosition.y + Mathf.Sin(Time.time * floatFrequency) * floatAmplitude;
         transform.position = new Vector3(transform.position.x, newY, transform.position.z);
     }
@@ -38,7 +40,6 @@ public class Hitodama : MonoBehaviour, IDamageable
         health -= damage;
         if (health <= 0)
         {
-            // If it's about to explode, cancel the explosion and just disappear
             if (explodeCoroutine != null)
             {
                 StopCoroutine(explodeCoroutine);
@@ -54,34 +55,45 @@ public class Hitodama : MonoBehaviour, IDamageable
         PlayerResources player = other.GetComponent<PlayerResources>();
         if (player != null)
         {
-            explodeCoroutine = StartCoroutine(ExplodeAfterDelay(player));
+            playerInTrigger = true;
+            playerInRange = player;
+            explodeCoroutine = StartCoroutine(ExplodeAfterDelay());
         }
     }
 
-    private System.Collections.IEnumerator ExplodeAfterDelay(PlayerResources player)
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        PlayerResources player = other.GetComponent<PlayerResources>();
+        if (player != null && player == playerInRange)
+        {
+            playerInTrigger = false;
+            playerInRange = null;
+        }
+    }
+
+    private System.Collections.IEnumerator ExplodeAfterDelay()
     {
         isExploding = true;
         yield return new WaitForSeconds(explosionDelay);
 
-        // If killed during delay, do not explode
         if (isDead) yield break;
 
-        Explode(player);
+        Explode();
     }
 
-    private void Explode(PlayerResources player)
+    private void Explode()
     {
         if (animator != null)
         {
             animator.SetTrigger("Explode");
         }
 
-        if (player != null)
+        // Only damage player if still in trigger
+        if (playerInTrigger && playerInRange != null)
         {
-            player.PlayerTakeDamage(explosionDamage);
+            playerInRange.PlayerTakeDamage(explosionDamage);
         }
 
-        // Destroy after animation (match your animation length)
         Invoke(nameof(DestroyObject), 0.8f);
     }
 
