@@ -71,6 +71,7 @@ public class PlayerResources : MonoBehaviour
     private PlayerDeath playerDeath; // reference to the PlayerDeath script
 
     public HealthBar healthBar; // health bar UI element
+    public GameObject damageImage; // Reference to the "Damage" Canvas Image
     public ManaBar manaBar; // mana bar UI element
     public Money moneyUI; // money counter UI element
     public MetaMoney metaMoneyUI; // meta money counter UI element
@@ -223,6 +224,10 @@ public class PlayerResources : MonoBehaviour
         health -= damage;
         healthBar.SetHealth(health); // Always update the health bar immediately
 
+        // Show the damage image
+        if (damageImage != null)
+            StartCoroutine(ShowDamageImage());
+
         if (health <= 0 && playerDeath != null)
         {
             playerDeath.HandlePlayerDeath();
@@ -235,7 +240,12 @@ public class PlayerResources : MonoBehaviour
             isRegenerating = false;
         }
     }
-
+    private IEnumerator ShowDamageImage()
+    {
+        damageImage.SetActive(true);
+        yield return new WaitForSeconds(0.3f); // Show for 0.3 seconds (adjust as needed)
+        damageImage.SetActive(false);
+    }
 
     public void UseMana(int amount)
     {

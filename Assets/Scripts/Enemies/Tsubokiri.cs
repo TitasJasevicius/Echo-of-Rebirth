@@ -3,14 +3,14 @@ using UnityEngine;
 public class Tsubokiri : MonoBehaviour, IDamageable
 {
     public int health;
-    public int maxHealth = 5000;
+    public int maxHealth = 2000;
     [SerializeField] FloatingHealthbar healthBar;
     public int contactDamage = 25;
     public float knockbackForce = 8f;
     public Animator animator;
 
     [Header("Attack Timing")]
-    public float attackDuration = 2.0f;   // How long the attack lasts
+    public float attackDuration = 5.0f;   // How long the attack lasts
     public float cooldownDuration = 2.5f; // How long before next attack
 
     private float attackTimer = 0f;
@@ -103,7 +103,7 @@ public class Tsubokiri : MonoBehaviour, IDamageable
 
     void Die()
     {
-        GiveGoldToPlayer(100);
+        GiveGoldToPlayer(500);
         Debug.Log("Tsubokiri (boss) died");
         Destroy(gameObject);
     }
