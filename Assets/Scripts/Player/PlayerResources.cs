@@ -82,14 +82,14 @@ public class PlayerResources : MonoBehaviour
   
   private void Awake()
   {
-    //boonInventory = new BoonInventory();
-    //boonInventoryUI.SetBoonInventory(boonInventory);
+        //boonInventory = new BoonInventory();
+        //boonInventoryUI.SetBoonInventory(boonInventory);
 
-    //BoonWorld.SpawnBoonWorld(new Vector3(-8, 4), new Boon { boonType = Boon.BoonType.ManaBoon });
-    //BoonWorld.SpawnBoonWorld(new Vector3(-10, 10), new Boon { boonType = Boon.BoonType.HealthBoon });
+        //BoonWorld.SpawnBoonWorld(new Vector3(-8, 4), new Boon { boonType = Boon.BoonType.ManaBoon });
+        //BoonWorld.SpawnBoonWorld(new Vector3(-10, 10), new Boon { boonType = Boon.BoonType.HealthBoon });
 
-    
-  }
+        playerDeath = GetComponent<PlayerDeath>();
+    }
 
   void Start()
     {
@@ -221,19 +221,21 @@ public class PlayerResources : MonoBehaviour
     public void PlayerTakeDamage(int damage)
     {
         health -= damage;
+        healthBar.SetHealth(health); // Always update the health bar immediately
+
         if (health <= 0 && playerDeath != null)
         {
             playerDeath.HandlePlayerDeath();
+            return; // Prevent further logic on death
         }
 
-        healthBar.SetHealth(health);
-
-        if (isRegenerating) //reset regen if player took damage
+        if (isRegenerating)
         {
-          StopCoroutine("RegenerateHealth");
-          isRegenerating = false;
+            StopCoroutine("RegenerateHealth");
+            isRegenerating = false;
         }
     }
+
 
     public void UseMana(int amount)
     {

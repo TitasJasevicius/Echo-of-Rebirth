@@ -24,8 +24,16 @@ public class PlayerMovement : MonoBehaviour
     private float dashCooldownTimer = 0f;  // Cooldown timer
     private bool isDashing = false;
 
+    public bool inputLocked = false;
+
     void Update()
     {
+
+        if (inputLocked || !enabled)
+        {
+            animator.SetFloat("Speed", 0);
+            return;
+        }
 
         // Handle horizontal movement input
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
@@ -99,7 +107,9 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Apply movement
+        if (inputLocked || !enabled)
+            return;
+
         controller.Move(horizontalMove * Time.fixedDeltaTime, jumpPressed, jumpHeld);
         jumpPressed = false;
     }

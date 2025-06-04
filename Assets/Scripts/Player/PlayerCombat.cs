@@ -15,6 +15,8 @@ public class PlayerCombat : MonoBehaviour
     public float attackRate = 2f;
     private float nextAttackTime = 0f;
 
+    public bool inputLocked = false;
+
     public Animator animator;
     private SpriteRenderer attackPointSpriteRenderer;
 
@@ -29,6 +31,9 @@ public class PlayerCombat : MonoBehaviour
 
     void Update()
     {
+        if (inputLocked || !enabled)
+            return;
+
         if (Time.time >= nextAttackTime)
         {
             if (Input.GetKeyDown(KeyCode.Space))
