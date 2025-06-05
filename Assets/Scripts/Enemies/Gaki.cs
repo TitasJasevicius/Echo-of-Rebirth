@@ -1,3 +1,4 @@
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class Gaki : MonoBehaviour, IDamageable
@@ -151,10 +152,16 @@ public class Gaki : MonoBehaviour, IDamageable
 
     void Die()
     {
+        // Register kill with RoomManager
+        RoomManager roomManager = FindObjectOfType<RoomManager>();
+        if (roomManager != null)
+            roomManager.RegisterGakiKill();
+
         GiveGoldToPlayer(20);
         Debug.Log("Enemy died");
         Destroy(gameObject);
     }
+
 
     private void GiveGoldToPlayer(int amount)
     {
