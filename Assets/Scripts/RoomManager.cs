@@ -19,9 +19,9 @@ public class RoomManager : MonoBehaviour
     private readonly Vector3[] roomSpawnPositions = new Vector3[]
     {
         new Vector3(-0.87f, 3.12f, -0.07674628f),   // Room 1
-        new Vector3(16.36f, 24.13f, -0.07674628f),  // Room 2
-        new Vector3(18.7f, 25.27f, -0.07674628f),   // Room 3
-        new Vector3(47.87f, 14.33f, -0.07674628f)   // Boss Room
+        new Vector3(19.08f, 30.01f, -0.07674628f),  // Room 2
+        new Vector3(18.7f, 30f, -0.07674628f),   // Room 3
+        new Vector3(47.87f, 20f, -0.07674628f)   // Boss Room
     };
 
     // Gaki kill requirements per room
@@ -51,6 +51,23 @@ public class RoomManager : MonoBehaviour
             }
         }
     }
+
+    void Update()
+    {
+#if UNITY_EDITOR
+        // Debug: Press G to add 1 Gaki kill
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            gakiKills += 1;
+            Debug.Log($"[DEBUG] Added 6 Gaki kills. Current: {gakiKills}");
+            if (currentRoom < gakiKillsRequired.Length && gakiKills >= gakiKillsRequired[currentRoom])
+            {
+                AdvanceRoom();
+            }
+        }
+#endif
+    }
+
 
     public void RegisterGakiKill()
     {
@@ -117,8 +134,16 @@ public class RoomManager : MonoBehaviour
         if (player != null && roomIndex >= 0 && roomIndex < roomSpawnPositions.Length)
         {
             player.position = roomSpawnPositions[roomIndex];
+
+            // Also update respawn position if PlayerDeath is present
+            PlayerDeath playerDeath = player.GetComponent<PlayerDeath>();
+            if (playerDeath != null)
+            {
+                playerDeath.respawnPosition = roomSpawnPositions[roomIndex];
+            }
         }
     }
+
 
     // Call this to initialize the first room (e.g. from Start)
     public void InitializeFirstRoom()
