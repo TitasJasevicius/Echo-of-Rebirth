@@ -3,8 +3,9 @@ using UnityEngine;
 public class DamageMetaUpgrade : MonoBehaviour
 {
   public int upgradeCost = 10;
-  public int damageIncrease = 1;
+  public int damageIncrease = 5;
   private const string DamageUpgradeKey = "PermanentDamageUpgradeLevel";
+  public AudioManager audioManager;
 
   private PlayerResources playerResources;
 
@@ -33,6 +34,7 @@ public class DamageMetaUpgrade : MonoBehaviour
       PlayerPrefs.Save();
 
       ApplyPermanentUpgrade();
+      audioManager.PlaySFX(audioManager.purchaseItem);
       Debug.Log($"Permanent damage upgrade purchased! New level: {currentLevel}");
     }
     else

@@ -10,8 +10,9 @@ public class PlayerDeath : MonoBehaviour
     public Rigidbody2D playerRigidbody;
     public float respawnDelay = 2f;
     public Vector3 respawnPosition; // Set this to your map's starting location
+    public AudioManager audioManager;
 
-    private void Awake()
+  private void Awake()
     {
         if (animator == null) animator = GetComponent<Animator>();
         if (playerMovement == null) playerMovement = GetComponent<PlayerMovement>();
@@ -31,9 +32,12 @@ public class PlayerDeath : MonoBehaviour
         // Trigger Die animation
         if (animator != null)
             animator.SetTrigger("Die");
+    // Play death sound effect
+    audioManager.PlaySFX(audioManager.death);
+    
 
-        // Disable movement and interaction
-        if (playerMovement != null)
+    // Disable movement and interaction
+    if (playerMovement != null)
             playerMovement.enabled = false;
         if (playerResources != null)
             playerResources.enabled = false;

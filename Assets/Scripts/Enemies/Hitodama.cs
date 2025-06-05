@@ -20,8 +20,9 @@ public class Hitodama : MonoBehaviour, IDamageable
     // Track if player is still in trigger
     private bool playerInTrigger = false;
     private PlayerResources playerInRange = null;
+  public AudioManager audioManager;
 
-    void Start()
+  void Start()
     {
         health = maxHealth;
         startPosition = transform.position;
@@ -88,16 +89,18 @@ public class Hitodama : MonoBehaviour, IDamageable
         {
             animator.SetTrigger("Explode");
         }
+        audioManager.PlaySFX(audioManager.explosion);
 
-        // Only damage player if still in trigger
-        if (playerInTrigger && playerInRange != null)
+    // Only damage player if still in trigger
+    if (playerInTrigger && playerInRange != null)
         {
             playerInRange.PlayerTakeDamage(explosionDamage);
         }
 
         GiveGoldToPlayer(10);
+        
 
-        Invoke(nameof(DestroyObject), 0.8f);
+    Invoke(nameof(DestroyObject), 0.8f);
     }
 
     private void GiveGoldToPlayer(int amount)
@@ -110,7 +113,8 @@ public class Hitodama : MonoBehaviour, IDamageable
             {
                 playerResources.AddGold(amount);
             }
-        }
+      audioManager.PlaySFX(audioManager.coinPicup);
+      }
     }
 
     private void Disappear()

@@ -11,6 +11,7 @@ public class Weapon : MonoBehaviour
   [SerializeField] public PlayerResources playerResources;
   public Transform container;
   public Transform equipmentContainer;
+  public AudioManager audioManager;
   public void Awake()
   {
     GameObject playerObj = GameObject.FindWithTag("Player");
@@ -42,8 +43,10 @@ public class Weapon : MonoBehaviour
       return;
     }
     playerResources.money -= price;
+    audioManager.PlaySFX(audioManager.purchaseItem);
 
-    
+
+
     if (equipmentContainer != null)
     {
       transform.SetParent(equipmentContainer, false);

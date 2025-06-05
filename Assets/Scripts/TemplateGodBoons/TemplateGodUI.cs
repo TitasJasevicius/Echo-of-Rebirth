@@ -12,6 +12,7 @@ public class TemplateGodUI : MonoBehaviour
   private Image godBoonBackground;
   private Image godBoonShopTitle;
   private TextMeshProUGUI godBoonShopText;
+  public AudioManager audioManager;
 
   [SerializeField] public BoonAssets boonAssets;
   [SerializeField] public PlayerResources playerResources;
@@ -137,11 +138,11 @@ public class TemplateGodUI : MonoBehaviour
 
   public void SpawnBishamontenBoons()
   {
-    Sprite staminaSprite = boonAssets.GetMoneySprite();
-    Sprite parrySprite = boonAssets.GetMoneySprite();
-    Sprite quickfeetSprite = boonAssets.GetMoneySprite();
-    Sprite resolveSprite= boonAssets.GetMoneySprite();
-    Sprite reguvinationSprite = boonAssets.GetMoneySprite();
+    Sprite staminaSprite = boonAssets.GetHeathSprite();
+    Sprite parrySprite = boonAssets.GetHeathSprite();
+    Sprite quickfeetSprite = boonAssets.GetHeathSprite();
+    Sprite resolveSprite= boonAssets.GetHeathSprite();
+    Sprite reguvinationSprite = boonAssets.GetHeathSprite();
 
     Sprite bishamontenBackground = boonAssets.BishamontenShopBackground;
     CreateBackgroundTitle(bishamontenBackground, "Bishamonten boons", bishamontenBoonsContainer);
@@ -154,11 +155,11 @@ public class TemplateGodUI : MonoBehaviour
   }
   public void SpawnAmaterasuBoons()
   {
-    Sprite blindingLightSprite = boonAssets.GetMoneySprite();
-    Sprite burningBladeSprite = boonAssets.GetMoneySprite();
-    Sprite lightsSpeedSprite = boonAssets.GetMoneySprite();
-    Sprite morningSunshineSprite = boonAssets.GetMoneySprite();
-    Sprite sunsReachSprite = boonAssets.GetMoneySprite();
+    Sprite blindingLightSprite = boonAssets.GetSwingSpeedSprite();
+    Sprite burningBladeSprite = boonAssets.GetSwingSpeedSprite();
+    Sprite lightsSpeedSprite = boonAssets.GetSwingSpeedSprite();
+    Sprite morningSunshineSprite = boonAssets.GetSwingSpeedSprite();
+    Sprite sunsReachSprite = boonAssets.GetSwingSpeedSprite();
 
     Sprite amaterasuBackground = boonAssets.AmaterasuShopBackground;
 
@@ -173,11 +174,11 @@ public class TemplateGodUI : MonoBehaviour
 
   public void SpawnTsukuyomiBoons()
   {
-    Sprite moonBladeSprite = boonAssets.GetMoneySprite();
-    Sprite shadowDashSprite = boonAssets.GetMoneySprite();
-    Sprite secondaryLightSprite = boonAssets.GetMoneySprite();
-    Sprite fullMoonSprite = boonAssets.GetMoneySprite();
-    Sprite moonlightTrickerySprite = boonAssets.GetMoneySprite();
+    Sprite moonBladeSprite = boonAssets.GetDamageSprite();
+    Sprite shadowDashSprite = boonAssets.GetDamageSprite();
+    Sprite secondaryLightSprite = boonAssets.GetDamageSprite();
+    Sprite fullMoonSprite = boonAssets.GetDamageSprite();
+    Sprite moonlightTrickerySprite = boonAssets.GetDamageSprite();
 
     Sprite tsukuyomiBackground = boonAssets.TsukoyamiShopBackground;
 
@@ -191,11 +192,11 @@ public class TemplateGodUI : MonoBehaviour
   }
   public void SpawnHachimanBoons()
   {
-    Sprite focusSprite = boonAssets.GetMoneySprite();
-    Sprite masterySprite = boonAssets.GetMoneySprite();
-    Sprite bloodthirstSprite = boonAssets.GetMoneySprite();
-    Sprite grandStandSprite = boonAssets.GetMoneySprite();
-    Sprite viciousAttacksSprite = boonAssets.GetMoneySprite();
+    Sprite focusSprite = boonAssets.GetManaSprite();
+    Sprite masterySprite = boonAssets.GetManaSprite();
+    Sprite bloodthirstSprite = boonAssets.GetManaSprite();
+    Sprite grandStandSprite = boonAssets.GetManaSprite();
+    Sprite viciousAttacksSprite = boonAssets.GetManaSprite();
 
     Sprite hacimanBackground = boonAssets.HachimanShopBackground;
 
@@ -688,22 +689,27 @@ public class TemplateGodUI : MonoBehaviour
             banteringBoon.SetPriceDecreasePercentage(20);
             banteringBoon.ApplyBoon(playerResources);
             UpdateBoonPrices();
+            audioManager.PlaySFX(audioManager.purchaseItem);
         }},
         { InariBoons.InariBoonType.EasyFindBoon, () => {
             easyFindBoon.SetGoldFindMultilplier(10f);
             easyFindBoon.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }},
         { InariBoons.InariBoonType.FoxsLuckBoon, () => {
             foxsLuckBoon.SetLifeStealMultiplier(5f);
             foxsLuckBoon.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }},
         { InariBoons.InariBoonType.LuckyStrikesBoon, () => {
             luckyStrikesBoon.SetBaseCriticalHitChanceMultiplier(5f);
             luckyStrikesBoon.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }},
         { InariBoons.InariBoonType.ResoursfulnesBoon, () => {
             resoursfulnesBoon.SetBaseHealingMultiplier(10f);
             resoursfulnesBoon.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }}
     };
 
@@ -713,23 +719,28 @@ public class TemplateGodUI : MonoBehaviour
         { BishamontenBoons.BishamontenBoonType.StaminaBoon, () => {
             staminaBoon.SetCooldownReduction(3);
             staminaBoon.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }},
         { BishamontenBoons.BishamontenBoonType.QuickfeetBoon, () => {
             quickfeetBoon.SetInvFrameCount(4);
             quickfeetBoon.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }},
         { BishamontenBoons.BishamontenBoonType.ResolveBoon, () => {
             resolveBoon.SetDamageReductionMultiplier(10.0f);
             resolveBoon.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }},
         { BishamontenBoons.BishamontenBoonType.ReguvinationBoon, () => {
             reguvinationBoon.SetRegenerationDuration(5);
             reguvinationBoon.SetRegenerationAmount(10);
             reguvinationBoon.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }},
         { BishamontenBoons.BishamontenBoonType.ParryBoon, () => {
             parryBoon.SetBaseAttackDamageIncrease(10);
             parryBoon.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }}
     };
     // Amaterasu Boons
@@ -739,24 +750,29 @@ public class TemplateGodUI : MonoBehaviour
             blindingLight.SetBlindChance(5);
             blindingLight.SetMissChance(5);
             blindingLight.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }},
         { AmaterasuBoons.AmaterasuBoonType.BurningBlade, () => {
             burningBlade.SetBurningDamage(10);
             burningBlade.SetBurningDuration(5);
             burningBlade.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }},
         { AmaterasuBoons.AmaterasuBoonType.LightsSpeed, () => {
             lightsSpeed.SetSpeedIncrease(20);
             lightsSpeed.ApplyBoon(playerResources, playerMovement);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }},
         { AmaterasuBoons.AmaterasuBoonType.MorningSunshine, () => {
             morningSunshine.SetShieldValue(100);
             morningSunshine.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }},
         { AmaterasuBoons.AmaterasuBoonType.SunsReach, () => {
             sunsReach.SetAttackDamageDecrease(5);
             sunsReach.SetAttackRangeIncrease(2);
             sunsReach.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }}
     };
 
@@ -768,22 +784,27 @@ public class TemplateGodUI : MonoBehaviour
             moonBlade.SetSleepDuration(5);
             moonBlade.SetBaseDamageIncrease(5);
             moonBlade.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }},
         { TsukuyomiBoons.TsukuyomiBoonType.ShadowDash, () => {
             shadowDash.SetShadowDashCooldown(15);
             shadowDash.SetInvisibilityDuration(5);
             shadowDash.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }},
         { TsukuyomiBoons.TsukuyomiBoonType.SecondaryLight, () => {
             secondaryLight.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }},
         { TsukuyomiBoons.TsukuyomiBoonType.FullMoon, () => {
             fullMoon.SetCritChanceMultiplier(100); //2x
             fullMoon.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }},
         { TsukuyomiBoons.TsukuyomiBoonType.MoonlightTrickery, () => {
             moonlightTrickery.SetDodgeChance(5);
             moonlightTrickery.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }}
     };
     // Hachiman Boons
@@ -792,24 +813,29 @@ public class TemplateGodUI : MonoBehaviour
         { HachimanBoons.HachimanBoonType.Focus, () => {
             focus.SetExtraDamage(5); 
             focus.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }},
         { HachimanBoons.HachimanBoonType.Mastery, () => {
             mastery.SetCritMultiplier(20.0f); 
             mastery.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }},
         { HachimanBoons.HachimanBoonType.Bloodthirst, () => {
             bloodthirst.SetMovementSpeedIncrease(15f); // Example speed increase
             bloodthirst.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }},
         { HachimanBoons.HachimanBoonType.GrandStand, () => {
             grandStand.SetAttackSpeedMultiplier(10.0f); // Example defense bonus
             grandStand.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }},
         { HachimanBoons.HachimanBoonType.ViciousAttacks, () => {
             viciousAttacks.SetBaseAttackDamageIncrease(5); // Example attack speed increase
             viciousAttacks.SetBleedDamage(10);
             viciousAttacks.SetBleedDuration(5);
             viciousAttacks.ApplyBoon(playerResources);
+          audioManager.PlaySFX(audioManager.purchaseItem);
         }}
     };
 

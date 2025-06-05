@@ -5,6 +5,7 @@ public class HeathMetaUpgrade : MonoBehaviour
   public int upgradeCost = 10;
   public int healthIncrease = 10;
   private const string HealthUpgradeKey = "PermanentHealthUpgradeLevel";
+  public AudioManager audioManager;
 
   private PlayerResources playerResources;
 
@@ -33,6 +34,7 @@ public class HeathMetaUpgrade : MonoBehaviour
       PlayerPrefs.Save();
 
       ApplyPermanentUpgrade();
+      audioManager.PlaySFX(audioManager.purchaseItem);
       Debug.Log($"Permanent health upgrade purchased! New level: {currentLevel}");
     }
     else

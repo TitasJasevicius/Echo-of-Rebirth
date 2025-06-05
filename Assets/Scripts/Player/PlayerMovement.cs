@@ -5,8 +5,9 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController2D controller;
     public AudioManager audioManager;
     public bool isGrounded = true;
+    private bool wasGrounded = true;
 
-    public Animator animator;
+  public Animator animator;
 
     public float runSpeed = 40f;
 
@@ -25,8 +26,10 @@ public class PlayerMovement : MonoBehaviour
     private bool isDashing = false;
 
     public bool inputLocked = false;
+  private bool jumpSoundPlayed = false;
+  public bool dashSoundPlayed = false;
 
-    void Update()
+  void Update()
     {
 
         if (inputLocked || !enabled)
@@ -62,9 +65,10 @@ public class PlayerMovement : MonoBehaviour
         {
             jumpPressed = true;
             jumpHeld = true;
+ 
+        
 
-            audioManager.PlaySFX(audioManager.jump); // You can spam this sound for now
-            animator.SetBool("IsJumping", true);
+      animator.SetBool("IsJumping", true);
         }
 
         if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow))
@@ -79,14 +83,27 @@ public class PlayerMovement : MonoBehaviour
             isDashing = true;
             dashTimeLeft = dashDuration;
             dashCooldownTimer = dashCooldown;
+        if (!dashSoundPlayed)
+        {
+          audioManager.PlaySFX(audioManager.dash); // Play dash sound ONCE
+          dashSoundPlayed = true;
         }
+        else
+        {
+       
+          dashSoundPlayed = false; // Reset dash sound flag after dash ends
+        }
+    }
 
         // Handle dashing
         if (isDashing)
         {
-            if (dashTimeLeft > 0f)
+      
+
+      if (dashTimeLeft > 0f)
             {
-                dashTimeLeft -= Time.deltaTime;
+        
+        dashTimeLeft -= Time.deltaTime;
                 float dashProgress = (dashDuration - dashTimeLeft) / dashDuration;
                 float speedMultiplier = Mathf.Sin(dashProgress * Mathf.PI);
                 float dashSpeedAdjusted = Mathf.Lerp(runSpeed, dashSpeed, speedMultiplier);
@@ -95,10 +112,24 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 isDashing = false;
-            }
+        dashSoundPlayed = false; // Reset dash sound flag after dash ends
+        
+      }
         }
         animator.SetBool("IsDashing", isDashing);
+
+    bool isJumping = animator.GetBool("IsJumping"); // or check Animator state directly
+
+    if (isJumping && !jumpSoundPlayed)
+    {
+      audioManager.PlaySFX(audioManager.jump);
+      jumpSoundPlayed = true;
     }
+    else if (!isJumping)
+    {
+      jumpSoundPlayed = false; // Reset when not jumping, so next jump can play sound
+    }
+  }
 
     public void OnLanding()
     {
@@ -124,4 +155,5 @@ public class PlayerMovement : MonoBehaviour
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
+  
 }

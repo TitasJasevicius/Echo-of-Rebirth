@@ -5,6 +5,7 @@ public class SpeedMetaUpgrade : MonoBehaviour
   public int upgradeCost = 10;
   public float speedIncrease = 2.0f; // Amount to increase runSpeed per upgrade
   private const string SpeedUpgradeKey = "PermanentSpeedUpgradeLevel";
+  public AudioManager audioManager;
 
   private PlayerMovement playerMovement;
 
@@ -40,6 +41,7 @@ public class SpeedMetaUpgrade : MonoBehaviour
       PlayerPrefs.Save();
 
       ApplyPermanentUpgrade();
+      audioManager.PlaySFX(audioManager.purchaseItem);
       Debug.Log($"Permanent speed upgrade purchased! New level: {currentLevel}");
     }
     else

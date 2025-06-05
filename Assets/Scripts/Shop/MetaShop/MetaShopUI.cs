@@ -15,6 +15,7 @@ public class MetaShopUI : MonoBehaviour
   [SerializeField] public DamageMetaUpgrade damageMetaUpgrade;
   [SerializeField] public SpeedMetaUpgrade speedMetaUpgrade;
   [SerializeField] public HeathMetaUpgrade healthMetaUpgrade;
+  public AudioManager audioManager;
 
   public BoonAssets boonAssets;
   // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -88,31 +89,36 @@ public class MetaShopUI : MonoBehaviour
 
     // Buy button logic
     Button buyButton = shopItemTransform.Find("MetaShopUpgradeBuyButton").GetComponent<Button>();
-    if(upgrade is SpeedMetaUpgrade speedUpgrade)
+    buyButton.onClick.RemoveAllListeners();
+
+    if (upgrade is SpeedMetaUpgrade speedUpgrade)
     {
       int upgradePrice = speedUpgrade.GetUpgradeCost();
       priceText.SetText(upgradePrice.ToString());
-      
-      buyButton.onClick.RemoveAllListeners();
-      buyButton.onClick.AddListener(() => BuySpeedUpgrade(speedUpgrade));
+      buyButton.onClick.AddListener(() => {
+        BuySpeedUpgrade(speedUpgrade);
+        
+      });
     }
     else if (upgrade is DamageMetaUpgrade damageUpgrade)
     {
       int upgradePrice = damageUpgrade.GetUpgradeCost();
       priceText.SetText(upgradePrice.ToString());
-
-      buyButton.onClick.RemoveAllListeners();
-      buyButton.onClick.AddListener(() => BuyDamageUpgrade(damageUpgrade));
+      buyButton.onClick.AddListener(() => {
+        BuyDamageUpgrade(damageUpgrade);
+        
+      });
     }
     else if (upgrade is HeathMetaUpgrade healthUpgrade)
     {
       int upgradePrice = healthUpgrade.GetUpgradeCost();
       priceText.SetText(upgradePrice.ToString());
-
-      buyButton.onClick.RemoveAllListeners();
-      buyButton.onClick.AddListener(() => BuyHealthUpgrade(healthUpgrade));
+      buyButton.onClick.AddListener(() => {
+        BuyHealthUpgrade(healthUpgrade);
+        
+      });
     }
-    
+
   }
 
   public void BuySpeedUpgrade(SpeedMetaUpgrade upgrade)

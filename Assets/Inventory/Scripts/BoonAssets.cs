@@ -32,4 +32,20 @@ public class BoonAssets : MonoBehaviour
   {
     return MoneyIncreaseSprite;
   }
+  public Sprite GetHeathSprite()
+  {
+    return HealthBoonSprite;
+  }
+  public Sprite GetSwingSpeedSprite()
+  {
+    return SwingSpeedBoonSprite;
+  }
+  public Sprite GetManaSprite()
+  {
+    return ManaBoonSprite;
+  }
+  public Sprite GetDamageSprite()
+  {
+    return DamageBoonSprite;
+  }
 }

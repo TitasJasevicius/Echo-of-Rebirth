@@ -8,11 +8,19 @@ public class AudioManager : MonoBehaviour
 
   [Header("Audio Clips")]
   public AudioClip background;
+  public AudioClip bacgroundIntense;
   public AudioClip jump;
+  public AudioClip purchaseItem;
+  public AudioClip coinPicup;
+  public AudioClip death;
+  public AudioClip dash;
+  public AudioClip attack;
+  public AudioClip explosion;
+  public AudioClip jump2;
 
   private void Start()
   {
-    audioSource.clip = background;
+    audioSource.clip = bacgroundIntense;
     audioSource.loop = true;
     audioSource.Play();
   }

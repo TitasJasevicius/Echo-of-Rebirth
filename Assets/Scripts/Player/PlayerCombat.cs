@@ -19,8 +19,9 @@ public class PlayerCombat : MonoBehaviour
 
     public Animator animator;
     private SpriteRenderer attackPointSpriteRenderer;
+  public AudioManager audioManager;
 
-    void Awake()
+  void Awake()
     {
         if (attackPoint != null)
         {
@@ -48,9 +49,15 @@ public class PlayerCombat : MonoBehaviour
     {
         // Play attack animation
         animator.SetTrigger("Attack");
+    // Play attack sound effect
+    
+    
+      audioManager.PlaySFX(audioManager.attack);
+    
 
-        // Show the attack point sprite for the attack duration
-        ShowAttackPoint();
+
+    // Show the attack point sprite for the attack duration
+    ShowAttackPoint();
 
         // Detect all enemies in range of attack
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);

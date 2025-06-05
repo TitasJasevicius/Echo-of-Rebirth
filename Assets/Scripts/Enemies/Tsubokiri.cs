@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Tsubokiri : MonoBehaviour, IDamageable
 {
@@ -27,6 +28,8 @@ public class Tsubokiri : MonoBehaviour, IDamageable
     private Rigidbody2D rb;
 
     public MetaMoney metaMoney;
+  public AudioManager audioManager;
+  // Start is called before the first frame update
 
 
   private void Awake()
@@ -149,13 +152,17 @@ public class Tsubokiri : MonoBehaviour, IDamageable
     void Die()
     {
         GiveGoldToPlayer(500);
-        metaMoney.AddMetaMoney(50);
+      audioManager.PlaySFX(audioManager.coinPicup);
+
+    metaMoney.AddMetaMoney(50);
         Debug.Log("Tsubokiri (boss) died");
 
         Destroy(gameObject);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
     }
 
-    private void GiveGoldToPlayer(int amount)
+  private void GiveGoldToPlayer(int amount)
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)

@@ -25,7 +25,9 @@ public class Gaki : MonoBehaviour, IDamageable
     private int groundLayer;
     private bool isChasing = false;
 
-    private void Awake()
+  public AudioManager audioManager;
+
+  private void Awake()
     {
         healthBar = GetComponentInChildren<FloatingHealthbar>();
         rb = GetComponent<Rigidbody2D>();
@@ -99,9 +101,13 @@ public class Gaki : MonoBehaviour, IDamageable
 
         rb.linearVelocity = new Vector2(direction * jumpHorizontalForce, jumpForce);
 
-        if (animator != null)
-            animator.SetTrigger("Jump");
-    }
+      if (animator != null)
+      {
+        animator.SetTrigger("Jump");
+        audioManager.PlaySFX(audioManager.jump2);
+
+      }
+  }
 
     private void JumpRandomly()
     {
@@ -114,7 +120,12 @@ public class Gaki : MonoBehaviour, IDamageable
         rb.linearVelocity = new Vector2(direction * idleJumpHorizontalForce, idleJumpForce);
 
         if (animator != null)
-            animator.SetTrigger("Jump");
+        {
+          animator.SetTrigger("Jump");
+          audioManager.PlaySFX(audioManager.jump2);
+
+        }
+            
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -168,7 +179,8 @@ public class Gaki : MonoBehaviour, IDamageable
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
-            PlayerResources playerResources = playerObj.GetComponent<PlayerResources>();
+      audioManager.PlaySFX(audioManager.coinPicup);
+      PlayerResources playerResources = playerObj.GetComponent<PlayerResources>();
             if (playerResources != null)
             {
                 playerResources.AddGold(amount);

@@ -12,6 +12,7 @@ public class ShopUI : MonoBehaviour
   public PlayerEquipment playerEquipment;
   public ShopAssets shopAssets;
   public Weapon weapon;
+  public AudioManager audioManager;
 
   void Awake()
   {
@@ -98,8 +99,12 @@ public class ShopUI : MonoBehaviour
 
       Button buyButton = shopItemTransform.Find("ShopBuyButton").GetComponent<Button>();
       buyButton.onClick.RemoveAllListeners();
-      buyButton.onClick.AddListener(() => weapon.BuyWeapon()); 
-      
+      buyButton.onClick.AddListener(() =>
+      {
+        weapon.BuyWeapon();
+        
+      });
+
     }
   }
   public static Weapon CreateWeapon(string weaponName, int damage, float attackSpeed, int range, int price, PlayerResources playerResources, GameObject weaponPrefab)
