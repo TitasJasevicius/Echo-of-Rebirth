@@ -26,7 +26,10 @@ public class Tsubokiri : MonoBehaviour, IDamageable
     private int groundLayer;
     private Rigidbody2D rb;
 
-    private void Awake()
+    public MetaMoney metaMoney;
+
+
+  private void Awake()
     {
         healthBar = GetComponentInChildren<FloatingHealthbar>();
         rb = GetComponent<Rigidbody2D>();
@@ -146,7 +149,9 @@ public class Tsubokiri : MonoBehaviour, IDamageable
     void Die()
     {
         GiveGoldToPlayer(500);
+        metaMoney.AddMetaMoney(50);
         Debug.Log("Tsubokiri (boss) died");
+
         Destroy(gameObject);
     }
 

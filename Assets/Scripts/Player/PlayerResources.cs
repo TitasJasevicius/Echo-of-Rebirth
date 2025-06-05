@@ -71,7 +71,7 @@ public class PlayerResources : MonoBehaviour
     private PlayerDeath playerDeath; // reference to the PlayerDeath script
 
     public HealthBar healthBar; // health bar UI element
-    public GameObject damageImage; // Reference to the "Damage" Canvas Image
+    public GameObject damageImage; // Reference  to the "Damage" Canvas Image
     public ManaBar manaBar; // mana bar UI element
     public Money moneyUI; // money counter UI element
     public MetaMoney metaMoneyUI; // meta money counter UI element
