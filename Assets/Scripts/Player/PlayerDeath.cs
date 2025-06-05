@@ -35,9 +35,16 @@ public class PlayerDeath : MonoBehaviour
         // Disable movement and interaction
         if (playerMovement != null)
             playerMovement.enabled = false;
-        // Do NOT disable the collider
         if (playerResources != null)
             playerResources.enabled = false;
+
+        // Disable collider while dead
+        if (playerCollider != null)
+            playerCollider.enabled = false;
+
+        // Stop damage flash effect on death
+        if (playerResources != null && playerResources.damageImage != null)
+            playerResources.damageImage.SetActive(false);
 
         // Freeze Rigidbody2D
         if (playerRigidbody != null)
@@ -68,8 +75,18 @@ public class PlayerDeath : MonoBehaviour
         if (playerRigidbody != null)
             playerRigidbody.bodyType = RigidbodyType2D.Dynamic;
 
-        // Trigger Respawn animation
+        // Re-enable collider after respawn
+        if (playerCollider != null)
+            playerCollider.enabled = true;
+
+        // --- Animation State Reset ---
         if (animator != null)
+        {
+            animator.ResetTrigger("Die");
+            animator.Play("Player_Idle", 0, 0f); // Replace with your actual idle state name if different
             animator.SetTrigger("Respawn");
+        }
+
+        // Do NOT re-enable damageImage here; let PlayerTakeDamage handle it
     }
 }
