@@ -57,7 +57,6 @@ public class RoomManager : MonoBehaviour
 
     void Update()
     {
-#if UNITY_EDITOR
         // Debug: Press G to add 1 Gaki kill
         if (Input.GetKeyDown(KeyCode.G))
         {
@@ -68,7 +67,6 @@ public class RoomManager : MonoBehaviour
                 AdvanceRoom();
             }
         }
-#endif
 
         // LOBBY EXIT LOGIC
         if (currentRoom == 0 && player != null && player.position.x > 20f)

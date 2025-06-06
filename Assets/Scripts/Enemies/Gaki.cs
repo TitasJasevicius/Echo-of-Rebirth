@@ -1,4 +1,3 @@
-using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class Gaki : MonoBehaviour, IDamageable
@@ -107,7 +106,7 @@ public class Gaki : MonoBehaviour, IDamageable
         audioManager.PlaySFX(audioManager.jump2);
 
       }
-  }
+    }
 
     private void JumpRandomly()
     {
@@ -179,8 +178,8 @@ public class Gaki : MonoBehaviour, IDamageable
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
-      audioManager.PlaySFX(audioManager.coinPicup);
-      PlayerResources playerResources = playerObj.GetComponent<PlayerResources>();
+            audioManager.PlaySFX(audioManager.coinPicup);
+            PlayerResources playerResources = playerObj.GetComponent<PlayerResources>();
             if (playerResources != null)
             {
                 playerResources.AddGold(amount);
