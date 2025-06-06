@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Tsukuyomi_Icon_0: 3246475941229292025
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

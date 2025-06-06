@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Hachiman_Icon_0: 2685084042857008647
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

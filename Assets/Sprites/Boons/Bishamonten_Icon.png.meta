@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Bishamonten_Icon_0: -3420685048443270312
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

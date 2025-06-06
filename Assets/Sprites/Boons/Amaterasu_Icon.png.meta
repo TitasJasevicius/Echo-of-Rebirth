@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Amaterasu_Icon_0: -4541322246243860980
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

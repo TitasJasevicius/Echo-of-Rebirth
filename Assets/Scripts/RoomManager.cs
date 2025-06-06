@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
+    public GameObject gridLobbyRoom;      // NEW: Lobby grid
     public GameObject gridRoomOne;
     public GameObject gridRoomTwo;
     public GameObject gridRoomThree;
     public GameObject gridBossRoom;
 
+    public GameObject lobbyEnemies;       // Optional: Lobby enemies
     public GameObject room1Enemies;
     public GameObject room2Enemies;
     public GameObject room3Enemies;
@@ -15,19 +17,20 @@ public class RoomManager : MonoBehaviour
     public Transform player;
     public PlayerResources playerResources;
 
-    // Room spawn positions
+    // Room spawn positions: 0 = Lobby, 1 = Room1, 2 = Room2, 3 = Room3, 4 = Boss
     private readonly Vector3[] roomSpawnPositions = new Vector3[]
     {
-        new Vector3(-0.87f, 3.12f, -0.07674628f),   // Room 1
-        new Vector3(19.08f, 30.01f, -0.07674628f),  // Room 2
-        new Vector3(18.7f, 30f, -0.07674628f),   // Room 3
-        new Vector3(47.87f, 20f, -0.07674628f)   // Boss Room
+        new Vector3(-10f, 3.12f, -0.07674628f),   // Lobby (adjust as needed)
+        new Vector3(-0.87f, 3.12f, -0.07674628f), // Room 1
+        new Vector3(19.08f, 30.01f, -0.07674628f),// Room 2
+        new Vector3(18.7f, 30f, -0.07674628f),    // Room 3
+        new Vector3(47.87f, 20f, -0.07674628f)    // Boss Room
     };
 
-    // Gaki kill requirements per room
+    // Gaki kill requirements per room (Room 1, 2, 3)
     private readonly int[] gakiKillsRequired = new int[] { 6, 10, 15 };
 
-    private int currentRoom = 0; // 0: Room1, 1: Room2, 2: Room3, 3: Boss
+    private int currentRoom = 0; // 0: Lobby, 1: Room1, 2: Room2, 3: Room3, 4: Boss
     public int gakiKills = 0;
 
     private void Awake()
@@ -60,21 +63,26 @@ public class RoomManager : MonoBehaviour
         {
             gakiKills += 1;
             Debug.Log($"[DEBUG] Added 6 Gaki kills. Current: {gakiKills}");
-            if (currentRoom < gakiKillsRequired.Length && gakiKills >= gakiKillsRequired[currentRoom])
+            if (currentRoom > 0 && currentRoom < gakiKillsRequired.Length + 1 && gakiKills >= gakiKillsRequired[currentRoom - 1])
             {
                 AdvanceRoom();
             }
         }
 #endif
-    }
 
+        // LOBBY EXIT LOGIC
+        if (currentRoom == 0 && player != null && player.position.x > 20f)
+        {
+            AdvanceRoom(); // Move to Room 1
+        }
+    }
 
     public void RegisterGakiKill()
     {
-        if (currentRoom < gakiKillsRequired.Length)
+        if (currentRoom > 0 && currentRoom < gakiKillsRequired.Length + 1)
         {
             gakiKills++;
-            if (gakiKills >= gakiKillsRequired[currentRoom])
+            if (gakiKills >= gakiKillsRequired[currentRoom - 1])
             {
                 AdvanceRoom();
             }
@@ -87,11 +95,13 @@ public class RoomManager : MonoBehaviour
         currentRoom++;
 
         // Deactivate all rooms/enemies
+        if (gridLobbyRoom != null) gridLobbyRoom.SetActive(false);
         gridRoomOne.SetActive(false);
         gridRoomTwo.SetActive(false);
         gridRoomThree.SetActive(false);
         gridBossRoom.SetActive(false);
 
+        if (lobbyEnemies != null) lobbyEnemies.SetActive(false);
         room1Enemies.SetActive(false);
         room2Enemies.SetActive(false);
         room3Enemies.SetActive(false);
@@ -100,20 +110,25 @@ public class RoomManager : MonoBehaviour
         // Activate the next room and enemies
         switch (currentRoom)
         {
-            case 1: // To Room 2
-                gridRoomTwo.SetActive(true);
-                room2Enemies.SetActive(true);
+            case 1: // To Room 1
+                gridRoomOne.SetActive(true);
+                room1Enemies.SetActive(true);
                 SetPlayerPosition(1);
                 break;
-            case 2: // To Room 3
-                gridRoomThree.SetActive(true);
-                room3Enemies.SetActive(true);
+            case 2: // To Room 2
+                gridRoomTwo.SetActive(true);
+                room2Enemies.SetActive(true);
                 SetPlayerPosition(2);
                 break;
-            case 3: // To Boss Room
+            case 3: // To Room 3
+                gridRoomThree.SetActive(true);
+                room3Enemies.SetActive(true);
+                SetPlayerPosition(3);
+                break;
+            case 4: // To Boss Room
                 gridBossRoom.SetActive(true);
                 bossRoomEnemies.SetActive(true);
-                SetPlayerPosition(3);
+                SetPlayerPosition(4);
                 break;
             default:
                 // Optionally handle end of game or loop
@@ -144,19 +159,20 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-
-    // Call this to initialize the first room (e.g. from Start)
-    public void InitializeFirstRoom()
+    // Call this to initialize the lobby room (e.g. from Start)
+    public void InitializeLobbyRoom()
     {
         currentRoom = 0;
         gakiKills = 0;
 
-        gridRoomOne.SetActive(true);
+        if (gridLobbyRoom != null) gridLobbyRoom.SetActive(true);
+        gridRoomOne.SetActive(false);
         gridRoomTwo.SetActive(false);
         gridRoomThree.SetActive(false);
         gridBossRoom.SetActive(false);
 
-        room1Enemies.SetActive(true);
+        if (lobbyEnemies != null) lobbyEnemies.SetActive(true);
+        room1Enemies.SetActive(false);
         room2Enemies.SetActive(false);
         room3Enemies.SetActive(false);
         bossRoomEnemies.SetActive(false);
